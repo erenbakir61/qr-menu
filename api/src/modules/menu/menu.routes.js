@@ -16,4 +16,8 @@ router.post('/*', menuController.createProductFail)
 router.delete('/:prodId', menuController.deleteProduct)
 router.delete('/', menuController.deleteProductFail)
 
+// Update methods
+router.patch('/', menuController.updateProductFail)
+router.patch('/:prodId', menuController.updateProduct)
+
 module.exports = router;

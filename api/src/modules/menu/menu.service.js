@@ -10,7 +10,7 @@ const findAll = async () => {
             return {status: "failed", data: null, message: "Kayit bulunamadi"}
         }
         else {
-            return {status: "ok", data, message: "Kayit basariyla bulundu"}
+            return {status: "ok", data, message: data}
         }
     } catch (err) {
         return {status: "failed", message: err}
@@ -34,11 +34,8 @@ const findById = async (id) => {
 }
 
 const createProduct = async (req) => {
-    let product = new Menu({
-        name: req.body.name,
-        price: req.body.price,
-        type: req.body.type,
-    })
+    const {name, price, type} = req.body;
+    let product = new Menu({name, price, type})
     try {
         let newProduct = await product.save()
         return {status: "ok", message: "Kayit basariyla kaydedildi.", product}
@@ -65,9 +62,22 @@ const deleteProduct = async (id) => {
     }
 }
 
+const updateProduct = async (id, reqProd) => {
+    try {
+        const {name, price, type} = reqProd
+        const oldData = (await findById(id)).message
+        await Menu.findByIdAndUpdate(id, { $set: {name, price, type}})
+        return {status: 'ok', message: reqProd, oldData}
+    }
+    catch (err) {
+        return {status: 'failed', message: err}
+    }
+}
+
 module.exports = {
     findAll,
     findById,
     createProduct,
     deleteProduct,
+    updateProduct,
 };
