@@ -19,6 +19,9 @@
               </div>
             </div>
           </div>
+          <ul>
+            <li v-for="ctg in categories">{{ ctg }}</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -67,3 +70,19 @@
     }
   }
 </style>
+
+<script>
+export default {
+  data() {
+    return {
+      fetchURL: 'http://localhost:3000/category/',
+      categories: {},
+    };
+  },
+  created() {
+    fetch(this.fetchURL)
+        .then(response => response.json())
+        .then(json => this.categories = json.message)
+  }
+}
+</script>
