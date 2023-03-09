@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    background-color: #f3f4f6;
+}
+header main{
+    height: 87vh;
+}
+a {
+    text-decoration: none!important;
+}
+a:focus, a:active {
+    outline: 0;
+}
+ul {
+    list-style: none;
+}
