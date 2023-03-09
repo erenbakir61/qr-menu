@@ -12,12 +12,15 @@ body {
 header main{
     height: 87vh;
 }
-a {
-    text-decoration: none!important;
-}
 a:focus, a:active {
     outline: 0;
 }
 ul {
     list-style: none;
+}
+a, u {
+    text-decoration: none!important;
+}
+.card-title a{
+    color: black!important;
 }
