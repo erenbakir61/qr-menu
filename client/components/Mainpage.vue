@@ -3,25 +3,22 @@
     <section id="main_products">
       <div class="container">
         <div class="row">
-          <div class="col-6 col-md-4 col-lg-2">
+          <div v-for="ctg in categories" class="col-6 col-md-4 col-lg-2">
             <div class="card">
-              <a class="card_image" href="#">
+              <RouterLink class="card_image" v-bind:to="'product/' + ctg.name">
                 <img
-                    src="@/assets/img/coffee.jpg"
+                    v-bind:src="'_nuxt/assets/img/' + ctg.img"
                     class="card-img-top"
-                    alt="Restaurant Product"
+                    v-bind:alt="ctg.name"
                 />
-              </a>
+              </RouterLink>
               <div class="card-body text-center">
                 <h5 class="card-title">
-                  <a href="#">Coffees</a>
+                  <a href="#">{{ ctg.name }}</a>
                 </h5>
               </div>
             </div>
           </div>
-          <ul>
-            <li v-for="ctg in categories">{{ ctg }}</li>
-          </ul>
         </div>
       </div>
     </section>
@@ -85,4 +82,8 @@ export default {
         .then(json => this.categories = json.message)
   }
 }
+</script>
+
+<script setup>
+const route = useRoute()
 </script>
