@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
 
-const menuController = require('./category.controller')
+const categoryController = require('./category.controller')
 
 
 // Get methods
-router.get('/', menuController.findAll);
-router.get('/:prodId', menuController.findById);
+router.get('/', categoryController.findAll);
+router.get('/:prodId', categoryController.findById);
 
 // Create methods
-router.post('/', menuController.createProduct)
-router.post('/*', menuController.createProductFail)
+router.post('/', categoryController.createProduct)
+router.post('/*', categoryController.createProductFail)
 
 // Delete methods
-router.delete('/:prodId', menuController.deleteProduct)
-router.delete('/', menuController.deleteProductFail)
+router.delete('/:prodId', categoryController.deleteProduct)
+router.delete('/', categoryController.deleteProductFail)
 
 // Update methods
-router.patch('/', menuController.updateProductFail)
-router.patch('/:prodId', menuController.updateProduct)
+router.patch('/', categoryController.updateProductFail)
+router.patch('/:prodId', categoryController.updateProduct)
 
 module.exports = router;

@@ -7,6 +7,10 @@ const findById = async (req, res) => {
     res.send(await menuService.findById(req.params.prodId))
 }
 
+const findCtg = async (req, res) => {
+    res.send(await menuService.findCtg(req.params.ctgId))
+}
+
 const createProduct = async (req, res) => {
     res.send(await menuService.createProduct(req))
 }
@@ -34,6 +38,7 @@ const updateProductFail = async (req, res) => {
 module.exports = {
     findAll,
     findById,
+    findCtg,
     createProduct,
     createProductFail,
     deleteProduct,

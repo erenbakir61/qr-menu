@@ -1,5 +1,6 @@
 const express = require('express');
 const Menu = require('../../../db/schemas/menu.schema');
+const Category = require("../../../db/schemas/category.schema");
 
 
 const findAll = async () => {
@@ -10,7 +11,7 @@ const findAll = async () => {
             return {status: "failed", data: null, message: "Kayit bulunamadi"}
         }
         else {
-            return {status: "ok", data, message: data}
+            return {status: "ok", message: data}
         }
     } catch (err) {
         return {status: "failed", message: err}
@@ -33,11 +34,27 @@ const findById = async (id) => {
     }
 }
 
+const findCtg = async (ctgName) => {
+    let data
+    try {
+        data = await Menu.find({'type': ctgName})
+        if (data) {
+            return {status: 'ok', message: data}
+        }
+        else {
+            return {status: 'failed', message: 'Kayit bulunamadi'}
+        }
+    }
+    catch (err) {
+        return {status: 'failed', message: err}
+    }
+}
+
 const createProduct = async (req) => {
     const {name, price, type} = req.body;
     let product = new Menu({name, price, type})
     try {
-        let newProduct = await product.save()
+        await product.save()
         return {status: "ok", message: "Kayit basariyla kaydedildi.", product}
     }
     catch (err) {
@@ -46,15 +63,13 @@ const createProduct = async (req) => {
 }
 
 const deleteProduct = async (id) => {
-    let product
     try {
-        product = await Menu.findById(id)
-        if (product.length > 0) {
-            await Menu.deleteOne({_id: id})
-            return {status: "ok", message: `Kayit basariyla silindi: ${product.name}`, product}
+        let product = await Category.findByIdAndDelete(id)
+        if (product != null) {
+            return {status: "ok", message: 'Kayit basariyla silindi', product}
         }
         else {
-            return {status: "failed", message: 'Hatali ID girildi'}
+            return {status: "failed", message: 'Kayit bulunamadi'}
         }
     }
     catch (err) {
@@ -74,10 +89,12 @@ const updateProduct = async (id, reqProd) => {
     }
 }
 
+
 module.exports = {
     findAll,
     findById,
     createProduct,
     deleteProduct,
     updateProduct,
+    findCtg,
 };
