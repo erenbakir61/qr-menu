@@ -15,18 +15,22 @@
               <h5 class="card-title">
                 <a v-bind:href="'#'">{{ ctg.name }}</a>
               </h5>
-              <button><img src="../assets/img/settings.svg" alt="Settings"></button>
+              <button v-on:click="editPanelOpener(ctg)"><img src="../assets/img/settings.svg" alt="Settings"></button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <CategoryEditPanel v-if="editPanel" class="CategoryEditPanel" v-bind:category="editPanelCtg">
+    <template v-slot:closeButton>
+      <button v-on:click="editPanelOpener" class="panel-closer"><img src="../assets/img/x.svg" alt="Edit Panel Closer"></button>
+    </template>
+  </CategoryEditPanel>
 </template>
 
 <style>
   #categories-panel {
-    display: none!important;
     width: 65%;
     height: 100%;
     position: relative;
@@ -57,8 +61,6 @@
   }
   #categories-panel .card img.card-img-top {
     width: 100%;
-    position: relative;
-    bottom: 5rem;
   }
   #categories-panel .card .card-body button {
     position: absolute;
@@ -92,7 +94,21 @@ export default {
     return {
       fetchURL: 'http://localhost:3000/category/',
       categories: {},
+      editPanel: false,
+      editPanelCtg: [],
     };
+  },
+  methods: {
+    editPanelOpener(category) {
+      this.editPanelCtg = []
+      if (this.editPanel == false) {
+        this.editPanel = true
+        this.editPanelCtg.push(category)
+      }
+      else {
+        this.editPanel = false
+      }
+    }
   },
   created() {
     fetch(this.fetchURL)

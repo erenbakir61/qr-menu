@@ -7,7 +7,7 @@ html {
     font-family: 'Poppins', sans-serif;
 }
 body {
-    background-color: #f3f4f6;
+    background-color: #f4f5f6;
 }
 header main{
     height: 87vh;
@@ -23,4 +23,9 @@ a, u {
 }
 .card-title a{
     color: black!important;
+}
+#panel_content {
+    display: flex;
+    position: relative;
+    top: 12rem;
 }
