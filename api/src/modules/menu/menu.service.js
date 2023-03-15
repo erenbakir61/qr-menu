@@ -33,6 +33,21 @@ const findById = async (id) => {
         return {status: "failed", message: 'Kayit bulunamadi'}
     }
 }
+const findByName = async (name) => {
+    let product
+    try {
+        product = await Menu.find({'name': name})
+        if (product.length == 0) {
+            return {status: "failed", message: "Kayit bulunamadi"}
+        }
+        else {
+            return {status: "ok", message: product}
+        }
+    }
+    catch (err) {
+        return {status: "failed", message: 'Kayit bulunamadi'}
+    }
+}
 
 const findCtg = async (ctgName) => {
     let data
@@ -64,7 +79,7 @@ const createProduct = async (req) => {
 
 const deleteProduct = async (id) => {
     try {
-        let product = await Category.findByIdAndDelete(id)
+        let product = await Menu.findByIdAndDelete(id)
         if (product != null) {
             return {status: "ok", message: 'Kayit basariyla silindi', product}
         }
@@ -93,6 +108,7 @@ const updateProduct = async (id, reqProd) => {
 module.exports = {
     findAll,
     findById,
+    findByName,
     createProduct,
     deleteProduct,
     updateProduct,

@@ -34,7 +34,7 @@ app.use('/category', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.status(404).res.send({ message: '404 route not found'});
+  res.status(404).send({ message: '404 route not found'});
 });
 
 // error handler

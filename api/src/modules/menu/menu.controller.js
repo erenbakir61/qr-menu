@@ -6,6 +6,9 @@ const findAll = async (req,res) => {
 const findById = async (req, res) => {
     res.send(await menuService.findById(req.params.prodId))
 }
+const findByName = async (req, res) => {
+    res.send(await menuService.findByName(req.params.prdName))
+}
 
 const findCtg = async (req, res) => {
     res.send(await menuService.findCtg(req.params.ctgId))
@@ -23,26 +26,13 @@ const updateProduct = async (req,res) => {
     res.send(await menuService.updateProduct(req.params.prodId, req.body))
 }
 
-const deleteProductFail = async (req, res) => {
-    res.send(`Lutfen ID giriniz`).status(400)
-}
-const createProductFail = async (req, res) => {
-    res.send(`Hatali istek`).status(400)
-}
-const updateProductFail = async (req, res) => {
-    res.send(`Hatali istek, lutfen id giriniz`).status(400)
-}
-
-
 
 module.exports = {
     findAll,
     findById,
+    findByName,
     findCtg,
     createProduct,
-    createProductFail,
     deleteProduct,
-    deleteProductFail,
     updateProduct,
-    updateProductFail,
 }
