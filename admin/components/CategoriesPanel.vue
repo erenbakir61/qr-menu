@@ -91,10 +91,10 @@
 </style>
 
 <script>
+import { useMenuStore } from '@/stores/menu'
 export default {
   data() {
     return {
-      fetchURL: 'http://localhost:3000/category/',
       categories: {},
       editPanel: false,
       editPanelCtg: [],
@@ -113,7 +113,7 @@ export default {
     }
   },
   created() {
-    fetch(this.fetchURL)
+    fetch(useMenuStore().ctgFetchUrl)
         .then(response => response.json())
         .then(json => this.categories = json.message)
   }
