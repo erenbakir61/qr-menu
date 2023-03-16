@@ -1,6 +1,6 @@
 <template>
   <div id="categories-panel">
-    <div class="row">
+    <div class="row d-inline">
       <div class="categories-content container">
         <div v-for="ctg in categories" class="card-wrapper">
           <div class="card">
@@ -32,7 +32,8 @@
 <style>
   #categories-panel {
     width: 65%;
-    height: 100%;
+    max-height: 100vh;
+    overflow: scroll;
     position: relative;
     display: inline-block;
     margin-left: 5rem;
@@ -47,6 +48,7 @@
     row-gap: 2rem;
     column-gap: 5%;
     padding: 0 10%;
+    width: 100%;
   }
   #categories-panel .card-wrapper {
     display: inline-block;

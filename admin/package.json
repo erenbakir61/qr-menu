@@ -9,5 +9,11 @@
   },
   "devDependencies": {
     "nuxt": "^3.2.3"
+  },
+  "overrides": {
+    "vue": "latest"
+  },
+  "dependencies": {
+    "pinia": "^2.0.33"
   }
 }
