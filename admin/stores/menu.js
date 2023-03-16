@@ -7,11 +7,20 @@ export const useMenuStore = defineStore('menuStore', {
             prdFetchUrl: 'http://localhost:3000/menu/',
             categories: [],
             products: [],
+            editPanel: false,
+            editPanelCtg: [],
         }
     },
     actions: {
-        increment() {
-            this.count++
+        editPanelOpener(category) {
+            this.editPanelCtg = []
+            if (this.editPanel == false) {
+                this.editPanel = true
+                this.editPanelCtg.push(category)
+            }
+            else {
+                this.editPanel = false
+            }
         },
     },
 })

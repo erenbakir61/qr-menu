@@ -7,7 +7,7 @@
 export default {
   data() {
     return {
-      fetchUrl: 'http://localhost:3000/menu/product/' + this.$route.params.id,
+      fetchUrl: 'http://localhost:3000/menu/products/' + this.$route.params.id,
       products: [],
       ctgName: this.$route.params.id
       };

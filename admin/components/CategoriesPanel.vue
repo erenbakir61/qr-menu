@@ -2,7 +2,7 @@
   <div id="categories-panel">
     <div class="row d-inline">
       <div class="categories-content container">
-        <div v-for="ctg in categories" class="card-wrapper">
+        <div v-for="ctg in menuStore.categories" class="card-wrapper">
           <div class="card">
             <a class="card_image" v-bind:href="'#'">
               <img
@@ -15,16 +15,16 @@
               <h5 class="card-title">
                 <a v-bind:href="'#'">{{ ctg.name }}</a>
               </h5>
-              <button v-on:click="editPanelOpener(ctg)"><img src="../assets/img/settings.svg" alt="Settings"></button>
+              <button v-on:click="menuStore.editPanelOpener(ctg)"><img src="../assets/img/settings.svg" alt="Settings"></button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <CategoryEditPanel v-if="editPanel" class="CategoryEditPanel" v-bind:category="editPanelCtg">
+  <CategoryEditPanel v-if="menuStore.editPanel" class="CategoryEditPanel" v-bind:category="menuStore.editPanelCtg">
     <template v-slot:closeButton>
-      <button v-on:click="editPanelOpener" class="panel-closer"><img src="../assets/img/x.svg" alt="Edit Panel Closer"></button>
+      <button v-on:click="menuStore.editPanelOpener" class="panel-closer"><img src="../assets/img/x.svg" alt="Edit Panel Closer"></button>
     </template>
   </CategoryEditPanel>
 </template>
@@ -90,32 +90,14 @@
   }
 </style>
 
-<script>
+<script setup>
 import { useMenuStore } from '@/stores/menu'
-export default {
-  data() {
-    return {
-      categories: {},
-      editPanel: false,
-      editPanelCtg: [],
-    };
-  },
-  methods: {
-    editPanelOpener(category) {
-      this.editPanelCtg = []
-      if (this.editPanel == false) {
-        this.editPanel = true
-        this.editPanelCtg.push(category)
-      }
-      else {
-        this.editPanel = false
-      }
-    }
-  },
-  created() {
-    fetch(useMenuStore().ctgFetchUrl)
-        .then(response => response.json())
-        .then(json => this.categories = json.message)
-  }
-}
+import { onMounted } from 'vue'
+const menuStore = useMenuStore()
+
+onMounted(async() => {
+  fetch(menuStore.ctgFetchUrl)
+      .then(response => response.json())
+      .then(json => menuStore.categories = json.message)
+});
 </script>

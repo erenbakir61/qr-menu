@@ -30,13 +30,31 @@
           </div>
         </div>
         <div class="panel_buttons">
-          <button><img src="../assets/img/trash.svg" alt="Delete Category">Delete</button>
+          <button v-on:click="deleteCtg(category[0])"><img src="../assets/img/trash.svg" alt="Delete Category">Delete</button>
           <button><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: ['category']
+}
+</script>
+
+<script setup>
+import { useMenuStore} from "~/stores/menu";
+const menuStore = useMenuStore()
+
+const deleteCtg = async (category) => {
+  await fetch(menuStore.ctgFetchUrl+category._id, { method: 'DELETE' })
+      .then(() => menuStore.categories.pop(category))
+      .then(() => menuStore.editPanel = false);
+
+}
+</script>
 
 <style>
 #category-edit-panel {
@@ -115,9 +133,3 @@
   border: 0;
 }
 </style>
-
-<script>
-export default {
-  props: ['category'],
-}
-</script>
