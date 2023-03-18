@@ -2,11 +2,10 @@
   <div id="category-edit-panel">
     <div class="edit-panel_wrapper">
       <div class="edit-panel">
-        <slot name="closeButton"></slot>
+        <button v-on:click="menuStore.editPanelOpener" class="panel-closer"><img src="../assets/img/x.svg" alt="Edit Panel Closer"></button>
         <div class="panel-content">
           <div class="panel-content_left">
-            <label class="panel-content_header">Current Category Name:</label> <span class="panel-content_span"> {{ category[0].name }}</span>
-            <label class="panel-content_header" for="newCtgName">New Category Name:</label><input class="panel-content_text" type="text" name="newCtgName" id="newCtgName" placeholder="New Name">
+            <label class="panel-content_header" for="newCtgName">New Category Name:</label><input class="panel-content_text" type="text" name="newCtgName" id="newCtgName" placeholder="New Name" v-bind:value="menuStore.editPanelCtg[0].name">
             <label class="panel-content_header" for="newCtgImg">New Category Image: </label><input class="panel-content_upload" type="file" name="newCtgImg" id="newCtgImg">
           </div>
           <div class="panel-content_right">
@@ -15,14 +14,14 @@
               <div class="card">
                 <a class="card_image" v-bind:href="'#'">
                   <img
-                      v-bind:src="'_nuxt/assets/img/products/' + category[0].img"
+                      v-bind:src="'_nuxt/assets/img/products/' + menuStore.editPanelCtg[0].img"
                       class="card-img-top"
-                      v-bind:alt="category[0].name"
+                      v-bind:alt="menuStore.editPanelCtg[0].name"
                   />
                 </a>
                 <div class="card-body text-center">
                   <h5 class="card-title">
-                    <a v-bind:href="'#'">{{ category[0].name }}</a>
+                    <a href="#">{{ menuStore.editPanelCtg[0].name }}</a>
                   </h5>
                 </div>
               </div>
@@ -30,7 +29,7 @@
           </div>
         </div>
         <div class="panel_buttons">
-          <button v-on:click="deleteCtg(category[0])"><img src="../assets/img/trash.svg" alt="Delete Category">Delete</button>
+          <button v-on:click="deleteCtg(menuStore.editPanelCtg[0])"><img src="../assets/img/trash.svg" alt="Delete Category">Delete</button>
           <button><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
         </div>
       </div>
@@ -38,27 +37,23 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['category']
-}
-</script>
-
 <script setup>
-import { useMenuStore} from "~/stores/menu";
+import { ref } from "vue";
+import { useMenuStore } from "~/stores/menu";
 const menuStore = useMenuStore()
 
 const deleteCtg = async (category) => {
   await fetch(menuStore.ctgFetchUrl+category._id, { method: 'DELETE' })
       .then(() => menuStore.categories.pop(category))
-      .then(() => menuStore.editPanel = false);
+      .then(() => menuStore.categoryEditPanelIsOpen = false);
 
 }
 </script>
 
 <style>
-#category-edit-panel {
+#category-edit-panel, #category-create-panel {
   position: absolute;
+  bottom: 15%;
   width: 100%;
   height: 100%;
   display: flex;

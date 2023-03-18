@@ -1,6 +1,7 @@
 <template>
   <div id="categories-panel">
     <div class="row d-inline">
+      <button v-on:click="menuStore.createCtgOpener" class="create-category"><img src="../assets/img/add.svg" alt="Add Category"></button>
       <div class="categories-content container">
         <div v-for="ctg in menuStore.categories" class="card-wrapper">
           <div class="card">
@@ -22,11 +23,8 @@
       </div>
     </div>
   </div>
-  <CategoryEditPanel v-if="menuStore.editPanel" class="CategoryEditPanel" v-bind:category="menuStore.editPanelCtg">
-    <template v-slot:closeButton>
-      <button v-on:click="menuStore.editPanelOpener" class="panel-closer"><img src="../assets/img/x.svg" alt="Edit Panel Closer"></button>
-    </template>
-  </CategoryEditPanel>
+  <CategoryCreatePanel v-if="menuStore.categoryCreatePanelIsOpen" />
+  <CategoryEditPanel v-if="menuStore.categoryEditPanelIsOpen" />
 </template>
 
 <style>
@@ -73,6 +71,16 @@
     display: inline-block;
     background-color: #ddd;
     border: 0;
+  }
+  .create-category {
+    background-color: #ddd;
+    border: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0 0 0 1rem;
   }
   @media (min-width: 2200px) {
     .categories-content {

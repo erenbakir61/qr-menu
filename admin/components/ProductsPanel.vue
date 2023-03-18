@@ -1,53 +1,48 @@
-<script>
-export default {
-  data() {
-    return {
-      fetchUrl: 'http://localhost:3000/menu/',
-      ctgFetchUrl: 'http://localhost:3000/category/',
-      products: [],
-      filteredPrd: this.products,
-      categories: [],
-      currentCtg: 'All',
-    };
-  },
-  methods: {
-    ctgChange() {
-      this.filteredPrd = []
-        if (this.currentCtg == 'All') {
-          this.filteredPrd = this.products
-        }
-      for (let prd of this.products) {
-        if (prd.type == this.currentCtg) {
-          this.filteredPrd.push(prd)
-        }
-      }
-      return this.filteredPrd
+<script setup>
+import { useMenuStore } from "~/stores/menu";
+import { onBeforeMount , ref} from "vue";
+
+const menuStore = useMenuStore()
+const currentCtg = ref('All')
+
+const ctgChange = () => {
+  menuStore.filteredPrd = []
+  if (currentCtg.value == 'All') {
+    menuStore.filteredPrd = menuStore.products
+  }
+  for (let prd of menuStore.products) {
+    if (prd.type == currentCtg.value) {
+      menuStore.filteredPrd.push(prd)
     }
-  },
-  created() {
-    fetch(this.fetchUrl)
-        .then(response => response.json())
-        .then(json => {
-          this.products = json.message
-          this.filteredPrd = json.message
-        })
-    fetch(this.ctgFetchUrl)
-        .then(response => response.json())
-        .then(json => this.categories = json.message);
-  },
+  }
+  return menuStore.filteredPrd.value
 }
+
+onBeforeMount(async () => {
+  await fetch(menuStore.prdFetchUrl)
+      .then(response => response.json())
+      .then(json => {
+        menuStore.products = json.message
+        menuStore.filteredPrd = json.message;
+      })
+  await fetch(menuStore.ctgFetchUrl)
+        .then(response => response.json())
+        .then(json => menuStore.categories = json.message)
+})
+
 </script>
 
 <template>
   <div id="products-panel">
     <div class="row">
+      <button v-on:click="menuStore.createPrdOpener" class="create-category"><img src="../assets/img/add.svg" alt="Add Product"></button>
       <div class="products-content container">
         <div class="products-panel_header">
           <h3>Category:</h3>
           <div class="category_list">
             <select name="categories" id="categories" v-model="currentCtg" v-on:change="ctgChange">
               <option value="All">All</option>
-              <option v-for="ctg in categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
+              <option v-for="ctg in menuStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
             </select>
           </div>
         </div>
@@ -57,11 +52,11 @@ export default {
           </div>
           <div class="products-body">
             <ul class="products-list">
-              <li v-for="prd in filteredPrd" class="products-item">
+              <li v-for="prd in menuStore.filteredPrd" class="products-item">
                 <p>{{ prd.name }}<span>{{  prd.price + ' ₺'}}</span></p>
                 <div class="edit-buttons">
-                  <button><img src="../assets/img/trash.svg" alt="Delete"></button>
-                  <button><img src="../assets/img/edit.svg" alt="Edit"></button>
+                  <button v-on:click="menuStore.deletePrd(prd)"><img src="../assets/img/trash.svg" alt="Delete"></button>
+                  <button v-on:click="menuStore.productEditPanelOpener(prd)"><img src="../assets/img/edit.svg" alt="Edit"></button>
                   <button><img src="../assets/img/check.svg" alt="Ok"></button>
                 </div>
               </li>
@@ -71,6 +66,8 @@ export default {
       </div>
     </div>
   </div>
+  <ProductsEditPanel v-if="menuStore.productEditPanelIsOpen" />
+  <ProductCreatePanel v-if="menuStore.productCreatePanelIsOpen"/>
 </template>
 
 <style>
@@ -141,6 +138,16 @@ export default {
     margin-right: 1rem;
     background-color: transparent;
     border: 0;
+  }
+  .create-category {
+    background-color: #ddd;
+    border: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0 0 0 1rem;
   }
 </style>
 
