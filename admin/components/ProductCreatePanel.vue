@@ -5,13 +5,13 @@
         <button v-on:click="menuStore.createPrdOpener()" class="panel-closer"><img src="../assets/img/x.svg" alt="Create Panel Closer"></button>
         <div class="panel-content">
           <div class="panel-content_left">
-            <label class="panel-content_header" for="newPrdName">New Product Name:</label><input v-model="newPrdInfo.name" class="panel-content_text" type="text" name="newPrdName" id="newPrdName" placeholder="New Name">
-            <label class="panel-content_header" for="newPrdPrice">New Product Price:</label><input v-model="newPrdInfo.price" class="panel-content_text" type="text" name="newPrdPrice" id="newPrdPrice" placeholder="New Price">
-            <label class="panel-content_header" for="newPrdType">New Product Type:</label><input v-model="newPrdInfo.type" class="panel-content_text" type="text" name="newPrdType" id="newPrdType" placeholder="New Type">
+            <label class="panel-content_header" for="newPrdName">New Product Name:</label><input v-model="menuStore.createPrdBody.name" class="panel-content_text" type="text" name="newPrdName" id="newPrdName" placeholder="New Name">
+            <label class="panel-content_header" for="newPrdPrice">New Product Price:</label><input v-model="menuStore.createPrdBody.price" class="panel-content_text" type="text" name="newPrdPrice" id="newPrdPrice" placeholder="New Price">
+            <label class="panel-content_header" for="newPrdType">New Product Type:</label><input v-model="menuStore.createPrdBody.type" class="panel-content_text" type="text" name="newPrdType" id="newPrdType" placeholder="New Type">
           </div>
         </div>
         <div class="panel_buttons">
-          <button><img src="../assets/img/check.svg" alt="Accept Product">Accept</button>
+          <button v-on:click="menuStore.createPrd()"><img src="../assets/img/check.svg" alt="Accept Product">Accept</button>
         </div>
       </div>
     </div>
@@ -19,11 +19,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useMenuStore } from "~/stores/menu";
 const menuStore = useMenuStore()
-
-const newPrdInfo = ref({'name': '', 'price': '', 'type': ''})
 </script>
 
 <style>
