@@ -11,8 +11,7 @@
             <select name="categories" id="categories" v-model="menuStore.requestPrdBody.type">
               <option v-bind:value="menuStore.editPanelPrd[0].type" selected>Select a category</option>
               <option v-for="ctg in menuStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
-            </select>
-          </div>
+            </select>          </div>
         </div>
         <div class="panel_buttons">
           <button v-on:click="menuStore.deletePrd(menuStore.editPanelPrd[0])"><img src="../assets/img/trash.svg" alt="Delete Category">Delete</button>
