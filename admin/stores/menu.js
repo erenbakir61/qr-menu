@@ -79,7 +79,7 @@ export const useMenuStore = defineStore('menuStore', {
                 .then(response => response.json())
                 .then(this.productEditPanelIsOpen = false)
                 .then(this.requestPrdBody = {'title': '', 'price': '', 'type': ''})
-               // .then(() => this.filteredPrd.pop(product))
+                .then(() => this.filteredPrd.pop(product))
                // .then(data => this.filteredPrd.push(data.product))
         },
     },
