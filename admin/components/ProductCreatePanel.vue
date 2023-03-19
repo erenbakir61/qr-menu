@@ -5,9 +5,13 @@
         <button v-on:click="menuStore.createPrdOpener()" class="panel-closer"><img src="../assets/img/x.svg" alt="Create Panel Closer"></button>
         <div class="panel-content">
           <div class="panel-content_left">
-            <label class="panel-content_header" for="newPrdName">New Product Name:</label><input v-model="menuStore.createPrdBody.name" class="panel-content_text" type="text" name="newPrdName" id="newPrdName" placeholder="New Name">
-            <label class="panel-content_header" for="newPrdPrice">New Product Price:</label><input v-model="menuStore.createPrdBody.price" class="panel-content_text" type="text" name="newPrdPrice" id="newPrdPrice" placeholder="New Price">
-            <label class="panel-content_header" for="newPrdType">New Product Type:</label><input v-model="menuStore.createPrdBody.type" class="panel-content_text" type="text" name="newPrdType" id="newPrdType" placeholder="New Type">
+            <label class="panel-content_header" for="newPrdName">New Product Name:</label><input v-model="menuStore.requestPrdBody.name" class="panel-content_text" type="text" name="newPrdName" id="newPrdName" placeholder="New Name">
+            <label class="panel-content_header" for="newPrdPrice">New Product Price:</label><input v-model="menuStore.requestPrdBody.price" class="panel-content_text" type="text" name="newPrdPrice" id="newPrdPrice" placeholder="New Price">
+            <label class="panel-content_header" for="newPrdType">New Product Type:</label>
+            <select name="categories" id="categories" v-model="menuStore.requestPrdBody.type">
+              <option value="" disabled selected>Select a category</option>
+              <option v-for="ctg in menuStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
+            </select>
           </div>
         </div>
         <div class="panel_buttons">
@@ -54,9 +58,6 @@ const menuStore = useMenuStore()
 .panel-content_left * {
   margin-bottom: 1rem;
 }
-.panel-content_right {
-  margin-bottom: 3rem;
-}
 .panel-content_text {
   font-size: 1rem;
   width: 12rem;
@@ -65,17 +66,6 @@ const menuStore = useMenuStore()
 }
 .panel-content_text:focus {
   outline: none;
-}
-.panel-content_upload {
-  font-size: 1rem;
-}
-.card-wrapper .card {
-  width: 13rem;
-  box-shadow:11px 11px 22px #b3b3b3
-}
-.card-wrapper .card .card_image {
-  height: 11rem;
-  overflow: hidden;
 }
 .panel_buttons {
   position: absolute;
@@ -90,6 +80,12 @@ const menuStore = useMenuStore()
 }
 .panel_buttons button img {
   margin-right: .5rem;
+}
+select#categories{
+  padding: .4rem 1rem;
+  background-color: #f4f5f6;
+  border: 2px solid #f4f5f6;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 .panel-closer{
   position: absolute;

@@ -10,7 +10,7 @@ export const useMenuStore = defineStore('menuStore', {
             filteredPrd: [],
             editPanelCtg: [],
             editPanelPrd: [],
-            createPrdBody: {
+            requestPrdBody: {
                 'title': '',
                 'price': '',
                 'type': '',
@@ -63,11 +63,24 @@ export const useMenuStore = defineStore('menuStore', {
             await fetch(this.prdFetchUrl, {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(this.createPrdBody)
+                body: JSON.stringify(this.requestPrdBody)
             })
                 .then(response => response.json())
                 .then(data => this.filteredPrd.push(data.product))
                 .then(this.productCreatePanelIsOpen = false)
-        }
+                .then(this.requestPrdBody = {'title': '', 'price': '', 'type': ''})
+        },
+        async updatePrd(product) {
+            await fetch(this.prdFetchUrl+product._id, {
+                method: 'PATCH',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(this.requestPrdBody)
+            })
+                .then(response => response.json())
+                .then(this.productEditPanelIsOpen = false)
+                .then(this.requestPrdBody = {'title': '', 'price': '', 'type': ''})
+               // .then(() => this.filteredPrd.pop(product))
+               // .then(data => this.filteredPrd.push(data.product))
+        },
     },
 })
