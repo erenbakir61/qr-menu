@@ -5,17 +5,18 @@
         <button v-on:click="menuStore.productEditPanelOpener()" class="panel-closer"><img src="../assets/img/x.svg" alt="Edit Panel Closer"></button>
         <div class="panel-content">
           <div class="panel-content_main">
-            <label class="panel-content_header mt-4" for="newCtgName">New Product Name:</label><input class="product-panel-content_text mt-4" type="text" name="newCtgName" id="newCtgName" placeholder="New Name" v-bind:value="menuStore.editPanelPrd[0].name">
-            <label class="panel-content_header" for="newCtgPrc">New Product Price: </label><input class="product-panel-content_text" type="text" name="newCtgPrc" id="newCtgPrc" placeholder="New Price" v-bind:value="menuStore.editPanelPrd[0].price">
+            <label class="panel-content_header mt-4" for="newCtgName">New Product Name:</label><input class="product-panel-content_text mt-4" type="text" name="newCtgName" id="newCtgName" placeholder="New Name" v-model="menuStore.requestPrdBody.name">
+            <label class="panel-content_header" for="newCtgPrc">New Product Price: </label><input class="product-panel-content_text" type="text" name="newCtgPrc" id="newCtgPrc" placeholder="New Price" v-model="menuStore.requestPrdBody.price">
             <label class="panel-content_header" for="newPrdType">New Product Type:</label>
             <select name="categories" id="categories" v-model="menuStore.requestPrdBody.type">
               <option v-bind:value="menuStore.editPanelPrd[0].type" selected>Select a category</option>
               <option v-for="ctg in menuStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
-            </select>          </div>
+            </select>
+          </div>
         </div>
         <div class="panel_buttons">
           <button v-on:click="menuStore.deletePrd(menuStore.editPanelPrd[0])"><img src="../assets/img/trash.svg" alt="Delete Category">Delete</button>
-          <button v-on:click="menuStore.updatePrd((menuStore.editPanelPrd[0]))"><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
+          <button v-on:click="menuStore.updatePrd((menuStore.requestPrdBody))"><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
         </div>
       </div>
     </div>

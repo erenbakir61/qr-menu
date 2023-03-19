@@ -15,7 +15,7 @@ export const useMenuStore = defineStore('menuStore', {
                 'img': '',
             },
             requestPrdBody: {
-                'title': '',
+                'name': '',
                 'price': '',
                 'type': '',
             },
@@ -41,6 +41,7 @@ export const useMenuStore = defineStore('menuStore', {
             if (this.productEditPanelIsOpen == false) {
                 this.productEditPanelIsOpen = true
                 this.editPanelPrd.push(product)
+                this.requestPrdBody = this.editPanelPrd[0]
             }
             else {
                 this.productEditPanelIsOpen = false
@@ -91,9 +92,6 @@ export const useMenuStore = defineStore('menuStore', {
             })
                 .then(response => response.json())
                 .then(this.productEditPanelIsOpen = false)
-                .then(this.requestPrdBody = {'title': '', 'price': '', 'type': ''})
-            // .then(() => this.filteredPrd.pop(product))
-            // .then(data => this.filteredPrd.push(data.product))
         },
     },
 })

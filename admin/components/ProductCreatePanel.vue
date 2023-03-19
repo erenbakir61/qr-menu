@@ -81,6 +81,12 @@ const menuStore = useMenuStore()
 .panel_buttons button img {
   margin-right: .5rem;
 }
+select#categories{
+  padding: .4rem 1rem;
+  background-color: #f4f5f6;
+  border: 2px solid #f4f5f6;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
 .panel-closer{
   position: absolute;
   top: 1.5rem;
