@@ -6,8 +6,8 @@ const categorySchema = new mongoose.Schema({
         required: true
     },
     img: {
-        type: String,
-        required: true
+        data: Buffer,
+        contentType: String
     },
     creatingDate: {
         type: Date,
