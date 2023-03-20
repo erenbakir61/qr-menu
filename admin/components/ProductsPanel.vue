@@ -57,7 +57,6 @@ onBeforeMount(async () => {
                 <div class="edit-buttons">
                   <button v-on:click="menuStore.deletePrd(prd)"><img src="../assets/img/trash.svg" alt="Delete"></button>
                   <button v-on:click="menuStore.productEditPanelOpener(prd)"><img src="../assets/img/edit.svg" alt="Edit"></button>
-                  <button><img src="../assets/img/check.svg" alt="Ok"></button>
                 </div>
               </li>
             </ul>

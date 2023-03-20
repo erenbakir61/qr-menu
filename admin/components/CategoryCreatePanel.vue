@@ -6,30 +6,11 @@
         <div class="panel-content">
           <div class="panel-content_left">
             <label class="panel-content_header" for="newCtgName">New Category Name:</label><input v-model="menuStore.requestCtgBody.name" class="panel-content_text" type="text" name="newCtgName" id="newCtgName" placeholder="New Name">
-            <label class="panel-content_header" for="newCtgImg">New Category Image: </label><input class="panel-content_upload" type="file" name="newCtgImg" id="newCtgImg" v-on:change="createImg">
-          </div>
-          <div class="panel-content_right">
-            <p>Preview:</p>
-            <div class="card-wrapper">
-              <div class="card">
-                <a class="card_image" href="#">
-                  <img
-                      v-bind:src="'_nuxt/assets/img/products/' + menuStore.requestCtgBody.img"
-                      class="card-img-top"
-                      v-bind:alt="menuStore.requestCtgBody.name"
-                  />
-                </a>
-                <div class="card-body text-center">
-                  <h5 class="card-title">
-                    <a href="'#'">{{ menuStore.requestCtgBody.name }}</a>
-                  </h5>
-                </div>
-              </div>
-            </div>
+            <label class="panel-content_header" for="newCtgImg">New Category Image: </label><input class="panel-content_upload" type="file" name="newCtgImg" id="newCtgImg">
           </div>
         </div>
         <div class="panel_buttons">
-          <button v-on:click="menuStore.createCtg()"><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
+          <button v-on:click="createImg"><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
         </div>
       </div>
     </div>
@@ -52,6 +33,7 @@ const createImg = async () => {
   })
       .then(response => response.json())
       .then(data => menuStore.createCtg(data.filename))
+      .then(menuStore.categories.push(menuStore.requestCtgBody))
 }
 </script>
 

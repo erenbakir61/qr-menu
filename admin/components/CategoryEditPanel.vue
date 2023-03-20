@@ -8,25 +8,6 @@
             <label class="panel-content_header" for="newCtgName">New Category Name:</label><input class="panel-content_text" type="text" name="newCtgName" id="newCtgName" placeholder="New Name" v-model="menuStore.editPanelCtg[0].name">
             <label class="panel-content_header" for="newCtgImg">New Category Image: </label><input class="panel-content_upload" type="file" name="newCtgImg" id="newCtgImg">
           </div>
-          <div class="panel-content_right">
-            <p>Preview:</p>
-            <div class="card-wrapper">
-              <div class="card">
-                <a class="card_image" v-bind:href="'#'">
-                  <img
-                      v-bind:src="menuStore.ctgImgFetchUrl + menuStore.editPanelCtg[0].img"
-                      class="card-img-top"
-                      v-bind:alt="menuStore.editPanelCtg[0].name"
-                  />
-                </a>
-                <div class="card-body text-center">
-                  <h5 class="card-title">
-                    <a href="#">{{ menuStore.editPanelCtg[0].name }}</a>
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="panel_buttons">
           <button v-on:click="deleteCtg(menuStore.editPanelCtg[0])"><img src="../assets/img/trash.svg" alt="Delete Category">Delete</button>
@@ -44,8 +25,11 @@ const menuStore = useMenuStore()
 
 const deleteCtg = async (category) => {
   await fetch(menuStore.ctgFetchUrl+category._id, { method: 'DELETE' })
-      .then(() => menuStore.categories.pop(category))
-      .then(() => menuStore.categoryEditPanelIsOpen = false);
+      .then(() => {
+        menuStore.categories.pop(category)
+        menuStore.categoryEditPanelIsOpen = false
+        menuStore.editPanelCtg = ''
+      })
 }
 
   const editCtg = async () => {
