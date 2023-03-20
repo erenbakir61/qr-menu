@@ -37,7 +37,7 @@ const deleteCtg = async (category) => {
   if (fileInput) {
     const formData = new FormData();
     formData.append('categoryImage', fileInput)
-    await fetch('http://localhost:3000/public/images', {
+    await fetch(menuStore.ctgImgFetchUrl, {
       method: 'POST',
       body: formData
     })
