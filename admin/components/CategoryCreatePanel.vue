@@ -5,8 +5,8 @@
         <button v-on:click="menuStore.createCtgOpener()" class="panel-closer"><img src="../assets/img/x.svg" alt="Edit Panel Closer"></button>
         <div class="panel-content">
           <div class="panel-content_left">
-            <label class="panel-content_header" for="newCtgName">New Category Name:</label><input v-model="newCtgInfo.name" class="panel-content_text" type="text" name="newCtgName" id="newCtgName" placeholder="New Name">
-            <label class="panel-content_header" for="newCtgImg">New Category Image: </label><input class="panel-content_upload" type="file" name="newCtgImg" id="newCtgImg">
+            <label class="panel-content_header" for="newCtgName">New Category Name:</label><input v-model="menuStore.requestCtgBody.name" class="panel-content_text" type="text" name="newCtgName" id="newCtgName" placeholder="New Name">
+            <label class="panel-content_header" for="newCtgImg">New Category Image: </label><input class="panel-content_upload" type="file" name="newCtgImg" id="newCtgImg" v-on:change="createImg">
           </div>
           <div class="panel-content_right">
             <p>Preview:</p>
@@ -14,14 +14,14 @@
               <div class="card">
                 <a class="card_image" href="#">
                   <img
-                      v-bind:src="'_nuxt/assets/img/products/' + newCtgInfo.img"
+                      v-bind:src="'_nuxt/assets/img/products/' + menuStore.requestCtgBody.img"
                       class="card-img-top"
-                      v-bind:alt="newCtgInfo.name"
+                      v-bind:alt="menuStore.requestCtgBody.name"
                   />
                 </a>
                 <div class="card-body text-center">
                   <h5 class="card-title">
-                    <a href="'#'">{{ newCtgInfo.name }}</a>
+                    <a href="'#'">{{ menuStore.requestCtgBody.name }}</a>
                   </h5>
                 </div>
               </div>
@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="panel_buttons">
-          <button><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
+          <button v-on:click="menuStore.createCtg()"><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
         </div>
       </div>
     </div>
@@ -41,7 +41,18 @@ import { ref } from 'vue'
 import { useMenuStore } from "~/stores/menu";
 const menuStore = useMenuStore()
 
-const newCtgInfo = ref({'name': '', 'img': ''})
+const createImg = async () => {
+  const fileInput = document.querySelector('.panel-content_upload').files[0]
+  const formData = new FormData();
+  formData.append('categoryImage', fileInput)
+
+  await fetch('http://localhost:3000/public/images', {
+    method: 'POST',
+    body: formData
+  })
+      .then(response => response.json())
+      .then(data => menuStore.createCtg(data.filename))
+}
 </script>
 
 <style>

@@ -7,7 +7,7 @@
           <div class="card">
             <a class="card_image" v-bind:href="'#'">
               <img
-                  v-bind:src="'_nuxt/assets/img/products/' + ctg.img"
+                  v-bind:src="menuStore.ctgImgFetchUrl + ctg.img"
                   class="card-img-top"
                   v-bind:alt="ctg.name"
               />

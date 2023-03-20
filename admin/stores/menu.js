@@ -5,13 +5,14 @@ export const useMenuStore = defineStore('menuStore', {
         return {
             ctgFetchUrl: 'http://localhost:3000/category/',
             prdFetchUrl: 'http://localhost:3000/menu/',
+            ctgImgFetchUrl: 'http://localhost:3000/public/images/categories/',
             categories: [],
             products: [],
             filteredPrd: [],
             editPanelCtg: [],
             editPanelPrd: [],
-            createCtgBody: {
-                'title': '',
+            requestCtgBody: {
+                'name': '',
                 'img': '',
             },
             requestPrdBody: {
@@ -74,14 +75,14 @@ export const useMenuStore = defineStore('menuStore', {
                 .then(data => this.filteredPrd.push(data.product))
                 .then(this.productCreatePanelIsOpen = false)
         },
-        async createCtg() {
+        async createCtg(name) {
+            this.requestCtgBody.img = name;
             await fetch(this.ctgFetchUrl, {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(this.createCtgBody)
+                body: JSON.stringify(this.requestCtgBody)
             })
                 .then(response => response.json())
-                .then(data => console.log(data))
                 .then(this.categoryCreatePanelIsOpen = false)
         },
         async updatePrd(product) {
@@ -92,6 +93,16 @@ export const useMenuStore = defineStore('menuStore', {
             })
                 .then(response => response.json())
                 .then(this.productEditPanelIsOpen = false)
+        },
+        async updateCtg() {
+            console.log(this.requestCtgBody)
+            await fetch(this.ctgFetchUrl+this.editPanelCtg[0]._id, {
+                method: 'PATCH',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(this.requestCtgBody)
+            })
+                .then(response => response.json())
+                .then(this.categoryEditPanelIsOpen = false)
         },
     },
 })

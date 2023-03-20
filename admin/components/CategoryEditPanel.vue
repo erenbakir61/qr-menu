@@ -5,7 +5,7 @@
         <button v-on:click="menuStore.editPanelOpener" class="panel-closer"><img src="../assets/img/x.svg" alt="Edit Panel Closer"></button>
         <div class="panel-content">
           <div class="panel-content_left">
-            <label class="panel-content_header" for="newCtgName">New Category Name:</label><input class="panel-content_text" type="text" name="newCtgName" id="newCtgName" placeholder="New Name" v-bind:value="menuStore.editPanelCtg[0].name">
+            <label class="panel-content_header" for="newCtgName">New Category Name:</label><input class="panel-content_text" type="text" name="newCtgName" id="newCtgName" placeholder="New Name" v-model="menuStore.editPanelCtg[0].name">
             <label class="panel-content_header" for="newCtgImg">New Category Image: </label><input class="panel-content_upload" type="file" name="newCtgImg" id="newCtgImg">
           </div>
           <div class="panel-content_right">
@@ -14,7 +14,7 @@
               <div class="card">
                 <a class="card_image" v-bind:href="'#'">
                   <img
-                      v-bind:src="'_nuxt/assets/img/products/' + menuStore.editPanelCtg[0].img"
+                      v-bind:src="menuStore.ctgImgFetchUrl + menuStore.editPanelCtg[0].img"
                       class="card-img-top"
                       v-bind:alt="menuStore.editPanelCtg[0].name"
                   />
@@ -30,7 +30,7 @@
         </div>
         <div class="panel_buttons">
           <button v-on:click="deleteCtg(menuStore.editPanelCtg[0])"><img src="../assets/img/trash.svg" alt="Delete Category">Delete</button>
-          <button><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
+          <button v-on:click="editCtg"><img src="../assets/img/check.svg" alt="Accept Category">Accept</button>
         </div>
       </div>
     </div>
@@ -46,12 +46,36 @@ const deleteCtg = async (category) => {
   await fetch(menuStore.ctgFetchUrl+category._id, { method: 'DELETE' })
       .then(() => menuStore.categories.pop(category))
       .then(() => menuStore.categoryEditPanelIsOpen = false);
+}
 
+  const editCtg = async () => {
+  const fileInput = document.querySelector('.panel-content_upload').files[0]
+  if (fileInput) {
+    const formData = new FormData();
+    formData.append('categoryImage', fileInput)
+    await fetch('http://localhost:3000/public/images', {
+      method: 'POST',
+      body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.filename)
+          menuStore.requestCtgBody.name = menuStore.editPanelCtg[0].name
+          menuStore.requestCtgBody.img = data.filename
+          menuStore.updateCtg()
+          menuStore.editPanelCtg[0].img = data.filename
+        })
+  }
+  else {
+    menuStore.requestCtgBody.name = menuStore.editPanelCtg[0].name
+    menuStore.requestCtgBody.img = menuStore.editPanelCtg[0].img
+    menuStore.updateCtg()
+  }
 }
 </script>
 
 <style>
-#category-edit-panel, #category-create-panel {
+#category-edit-panel {
   position: absolute;
   bottom: 15%;
   width: 100%;

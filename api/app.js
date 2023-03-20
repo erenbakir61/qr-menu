@@ -7,6 +7,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const multer = require('multer');
+const crypto = require('crypto');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -19,7 +20,7 @@ const mongoURI = 'mongodb://127.0.0.1:27017/menu';
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
+app.use("/public", express.static("public"));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,7 +35,20 @@ app.use('/menu', menuRouter);
 app.use('/category', categoryRouter);
 
 // Multer Setup
-const upload = multer({ dest: './public/' })
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/categories/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueName = Date.now() + '-' + (crypto.randomBytes(8).toString("hex"))
+    cb(null, uniqueName + "." + file.mimetype.split("/")[1]);
+  },
+});
+const upload = multer({ dest: './public/images/categories/', storage: storage })
+
+app.post('/public/images', upload.single('categoryImage'), function (req, res) {
+  res.send(req.file)
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
