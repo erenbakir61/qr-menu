@@ -31,7 +31,8 @@
   #categories-panel {
     width: 65%;
     max-height: 100vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     position: relative;
     display: inline-block;
     margin-left: 5rem;
