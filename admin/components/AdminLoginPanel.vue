@@ -9,18 +9,18 @@
               <div class="login_panel-username">
                 <label for="panelUsername">Username</label>
                 <div>
-                  <img src="@/assets/img/user.svg">
+                  <img class="input_img" src="@/assets/img/user.svg">
                   <input type="text" id="panelUsername">
                 </div>
               </div>
               <div class="login_panel-password">
                 <label for="panelPassword">Password</label>
                 <div>
-                  <img src="@/assets/img/key.svg">
+                  <img class="input_img" src="@/assets/img/lock.svg">
                   <input type="text" id="panelPassword">
                 </div>
               </div>
-              <button>Login</button>
+              <button><img src="@/assets/img/login.svg" class="me-2 my-1"> Login</button>
             </form>
           </div>
         </div>
@@ -62,7 +62,7 @@
   display: block;
   margin-bottom: .5rem;
 }
-.login_panel-form img {
+.login_panel-form img.input_img {
   padding-right: 10px;
   margin: .3rem 0;
   position: absolute;
@@ -80,14 +80,15 @@
 }
 .login_panel-form input:focus {
   outline: none;
-}.login_panel-form button {
+}
+.login_panel-form button {
    font-size: 1.2rem;
-   padding: .5rem 2.5rem;
+   padding: .5rem 2rem;
    margin-top: 2rem;
-   background-color: #E5E7EB;
+   background-color: #f3f4f6;
+   color: #475569;
    border-radius: 10px;
    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-
 }
 </style>
 
