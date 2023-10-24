@@ -11,7 +11,7 @@ const findByName = async (req, res) => {
 }
 
 const findCtg = async (req, res) => {
-    res.send(await menuService.findCtg(req.params.ctgId))
+    res.send(await menuService.findCtg(req.params.ctgName))
 }
 
 const createProduct = async (req, res) => {
