@@ -113,7 +113,8 @@ onBeforeMount(async () => {
   }
   .products-body {
     height: 40vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     margin-top: 3rem;
   }
   .products-body .products-item {
