@@ -7,7 +7,7 @@
             <div class="card">
               <RouterLink class="card_image" v-bind:to="'product/' + ctg.name">
                 <img
-                    v-bind:src="'_nuxt/assets/img/' + ctg.img"
+                    v-bind:src="'http://localhost:3000/public/images/categories/' + ctg.img"
                     class="card-img-top"
                     v-bind:alt="ctg.name"
                 />
@@ -43,10 +43,6 @@
     min-height: 11rem;
     max-height: 11rem;
     overflow: hidden;
-  }
-  main .card img {
-    position: relative;
-    top: -4rem;
   }
   main .card .card-body h5 {
     margin-bottom: 0;

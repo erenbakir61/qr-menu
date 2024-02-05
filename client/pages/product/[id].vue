@@ -1,6 +1,5 @@
 <script setup>
   const route = useRoute()
-  // let categoryName = 'deneme'
 </script>
 
 <script>
@@ -33,7 +32,7 @@ export default {
               <div class="col text-center">
                 <h2>{{ route.params.id }}</h2>
                 <ul class="list-group">
-                  <li class="list-group-item" v-for="product in products">{{ product.name }}<span>{{ product.price }}</span></li>
+                  <li class="list-group-item" v-for="product in products">{{ product.name }}<span>{{ product.price + ' ₺' }}</span></li>
                 </ul>
               </div>
             </div>
