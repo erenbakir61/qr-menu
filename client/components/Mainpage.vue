@@ -3,6 +3,9 @@
     <section id="main_products">
       <div class="container">
         <div class="row">
+          <div v-show="!(categories.length > 0)">
+            <img src="/loading.svg" alt="Loader" style="width: 5rem; margin: 0 auto">
+          </div>
           <div v-for="ctg in categories" class="col-6 col-md-4 col-lg-2">
             <div class="card">
               <RouterLink class="card_image" v-bind:to="'product/' + ctg.name">

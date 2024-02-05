@@ -6,13 +6,14 @@
         <div class="panel-content">
           <div class="panel-content_main">
             <label class="panel-content_header mt-4" for="newCtgName">New Product Name:</label><input class="product-panel-content_text mt-4" type="text" name="newCtgName" id="newCtgName" placeholder="New Name" v-model="menuStore.requestPrdBody.name">
-            <label class="panel-content_header" for="newCtgPrc">New Product Price: </label><input class="product-panel-content_text" type="text" name="newCtgPrc" id="newCtgPrc" placeholder="New Price" v-model="menuStore.requestPrdBody.price">
+            <label class="panel-content_header" for="newCtgPrc">New Product Price: </label><input class="erenbey product-panel-content_text" type="number" min="0" max="999" inputmode="numeric" pattern="[0-9]" name="newCtgPrc" id="newCtgPrc" placeholder="New Price" v-model="menuStore.requestPrdBody.price" v-on:keydown="priceInputValueCheck($event)">
             <label class="panel-content_header" for="newPrdType">New Product Type:</label>
             <select name="categories" id="categories" v-model="menuStore.requestPrdBody.type">
               <option v-bind:value="menuStore.editPanelPrd[0].type" selected>Select a category</option>
               <option v-for="ctg in menuStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
             </select>
           </div>
+          <p style="color: red; position: absolute" v-if="menuStore.productEditPanelError">Fiyat 0-999 arasi olmalidir.</p>
         </div>
         <div class="panel_buttons">
           <button v-on:click="menuStore.deletePrd(menuStore.editPanelPrd[0])"><img src="../assets/img/trash.svg" alt="Delete Category">Delete</button>
@@ -27,6 +28,11 @@
 import { useMenuStore } from "~/stores/menu";
 const menuStore = useMenuStore()
 
+const priceInputValueCheck = function (event) {
+  if(isNaN(event.key) && event.key !== 'Backspace') {
+    event.preventDefault();
+  }
+}
 </script>
 
 <style>

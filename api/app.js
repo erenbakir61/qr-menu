@@ -44,6 +44,7 @@ const storage = multer.diskStorage({
     cb(null, uniqueName + "." + file.mimetype.split("/")[1]);
   },
 });
+// images uploading on server with multer
 const upload = multer({ dest: './public/images/categories/', storage: storage })
 
 app.post('/public/images', upload.single('categoryImage'), function (req, res) {

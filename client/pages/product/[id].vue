@@ -31,6 +31,9 @@ export default {
             <div class="row">
               <div class="col text-center">
                 <h2>{{ route.params.id }}</h2>
+                <div v-show="!(products.length > 0)">
+                  <img src="/loading.svg" alt="Loader" style="width: 5rem; margin: 0 auto">
+                </div>
                 <ul class="list-group">
                   <li class="list-group-item" v-for="product in products">{{ product.name }}<span>{{ product.price + ' ₺' }}</span></li>
                 </ul>

@@ -18,6 +18,7 @@ const ctgChange = () => {
   return menuStore.filteredPrd.value
 }
 
+
 onBeforeMount(async () => {
   await fetch(menuStore.prdFetchUrl)
       .then(response => response.json())
@@ -26,10 +27,9 @@ onBeforeMount(async () => {
         menuStore.filteredPrd = json.message;
       })
   await fetch(menuStore.ctgFetchUrl)
-        .then(response => response.json())
-        .then(json => menuStore.categories = json.message)
+      .then(response => response.json())
+      .then(json => menuStore.categories = json.message)
 })
-
 </script>
 
 <template>
@@ -51,6 +51,9 @@ onBeforeMount(async () => {
             <h4>Product Name <span>Price</span></h4>
           </div>
           <div class="products-body">
+            <div v-show="!(menuStore.products.length > 0)">
+              <img src="/loading.svg" alt="Loader" style="width: 5rem; margin: 0 auto">
+            </div>
             <ul class="products-list">
               <li v-for="prd in menuStore.filteredPrd" class="products-item">
                 <p>{{ prd.name }}<span>{{  prd.price + ' ₺'}}</span></p>

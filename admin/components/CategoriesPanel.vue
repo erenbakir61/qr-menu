@@ -3,20 +3,25 @@
     <div class="row d-inline">
       <button v-on:click="menuStore.createCtgOpener" class="create-category"><img src="../assets/img/add.svg" alt="Add Category"></button>
       <div class="categories-content container">
-        <div v-for="ctg in menuStore.categories" class="card-wrapper">
-          <div class="card">
-            <a class="card_image" v-bind:href="'#'">
-              <img
-                  v-bind:src="menuStore.ctgImgFetchUrl + ctg.img"
-                  class="card-img-top"
-                  v-bind:alt="ctg.name"
-              />
-            </a>
-            <div class="card-body text-center">
-              <h5 class="card-title">
-                <a v-bind:href="'#'">{{ ctg.name }}</a>
-              </h5>
-              <button v-on:click="menuStore.editPanelOpener(ctg)"><img src="../assets/img/settings.svg" alt="Settings"></button>
+        <div v-show="!(menuStore.categories.length > 0)">
+          <img src="/loading.svg" alt="Loader" style="width: 5rem; margin: 0 auto">
+        </div>
+        <div v-for="ctg in menuStore.categories"
+               class="card-wrapper">
+            <div class="card">
+              <div class="card_image">
+                <img
+                    v-bind:src="menuStore.ctgImgFetchUrl + ctg.img"
+                    class="card-img-top"
+                    v-bind:alt="ctg.name"
+                    draggable="false"
+                />
+              </div>
+              <div class="card-body text-center">
+                <h5 class="card-title">
+                  <p >{{ ctg.name }}</p>
+                </h5>
+                <button v-on:click="menuStore.editPanelOpener(ctg)"><img src="../assets/img/settings.svg" alt="Settings"></button>
             </div>
           </div>
         </div>

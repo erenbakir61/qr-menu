@@ -21,8 +21,10 @@ export const useMenuStore = defineStore('menuStore', {
                 'type': '',
             },
             categoryEditPanelIsOpen: false,
+            categoryEditPanelError: false,
             categoryCreatePanelIsOpen: false,
             productEditPanelIsOpen: false,
+            productEditPanelError: false,
             productCreatePanelIsOpen: false,
         }
     },
@@ -49,12 +51,16 @@ export const useMenuStore = defineStore('menuStore', {
             }
         },
         createCtgOpener() {
+            this.editPanelCtg = []
             if (this.categoryCreatePanelIsOpen == false) {
                 this.categoryCreatePanelIsOpen = true
             }
-            else {this.categoryCreatePanelIsOpen = false}
+            else {
+                this.categoryCreatePanelIsOpen = false
+            }
         },
         createPrdOpener() {
+            this.requestPrdBody = []
             if (this.productCreatePanelIsOpen == false) {
                 this.productCreatePanelIsOpen = true
             }
@@ -86,13 +92,19 @@ export const useMenuStore = defineStore('menuStore', {
                 .then(this.categoryCreatePanelIsOpen = false)
         },
         async updatePrd(product) {
-            await fetch(this.prdFetchUrl+product._id, {
-                method: 'PATCH',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(this.requestPrdBody)
-            })
-                .then(response => response.json())
-                .then(this.productEditPanelIsOpen = false)
+            if (product.price >= 0 && product.price <= 999) {
+                await fetch(this.prdFetchUrl+product._id, {
+                    method: 'PATCH',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(this.requestPrdBody)
+                })
+                    .then(response => response.json())
+                    .then(this.productEditPanelError = false)
+                    .then(this.productEditPanelIsOpen = false)
+            }
+            else (
+                this.productEditPanelError = true
+            )
         },
         async updateCtg() {
             console.log(this.requestCtgBody)
