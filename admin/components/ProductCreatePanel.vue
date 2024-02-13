@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="panel_buttons">
-          <button v-on:click="menuStore.createPrd()"><img src="../assets/img/check.svg" alt="Accept Product">Accept</button>
+          <button v-on:click="menuStore.createPrd(menuStore.requestPrdBody)"><img src="../assets/img/check.svg" alt="Accept Product">Accept</button>
         </div>
       </div>
     </div>
