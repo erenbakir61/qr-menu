@@ -9,7 +9,7 @@ export const useMenuStore = defineStore('menuStore', {
       categories: [],
       products: [],
       filteredPrd: [],
-      editPanelCtg: [],
+      editPanelCtg: {},
       editPanelPrd: {},
       requestCtgBody: {},
       requestPrdBody: {},
@@ -23,10 +23,10 @@ export const useMenuStore = defineStore('menuStore', {
   },
   actions: {
     editPanelOpener(category) {
-      this.editPanelCtg = [];
+      this.editPanelCtg = {};
       if (this.categoryEditPanelIsOpen === false) {
+        this.editPanelCtg = category;
         this.categoryEditPanelIsOpen = true;
-        this.editPanelCtg.push(category);
       } else {
         this.categoryEditPanelIsOpen = false;
       }
@@ -88,7 +88,7 @@ export const useMenuStore = defineStore('menuStore', {
     },
     async updateCtg() {
       console.log(this.requestCtgBody);
-      await fetch(this.ctgFetchUrl + this.editPanelCtg[0]._id, {
+      await fetch(this.ctgFetchUrl + this.editPanelCtg._id, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.requestCtgBody),

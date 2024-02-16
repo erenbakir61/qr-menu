@@ -14,14 +14,14 @@
               name="newCtgName"
               id="newCtgName"
               placeholder="New Name"
-              v-model="menuStore.editPanelCtg[0].name"
+              v-bind:value="menuStore.editPanelCtg.name"
             />
             <label class="panel-content_header" for="newCtgImg">New Category Image: </label>
             <input class="panel-content_upload" type="file" name="newCtgImg" id="newCtgImg" />
           </div>
         </div>
         <div class="panel_buttons">
-          <button v-on:click="deleteCtg(menuStore.editPanelCtg[0])">
+          <button v-on:click="deleteCtg(menuStore.editPanelCtg)">
             <img src="../assets/img/trash.svg" alt="Delete Category" />Delete
           </button>
           <button v-on:click="editCtg"><img src="../assets/img/check.svg" alt="Accept Category" />Accept</button>
@@ -56,14 +56,14 @@ const editCtg = async () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.filename);
-        menuStore.requestCtgBody.name = menuStore.editPanelCtg[0].name;
+        menuStore.requestCtgBody.name = menuStore.editPanelCtg.name;
         menuStore.requestCtgBody.img = data.filename;
         menuStore.updateCtg();
-        menuStore.editPanelCtg[0].img = data.filename;
+        menuStore.editPanelCtg.img = data.filename;
       });
   } else {
-    menuStore.requestCtgBody.name = menuStore.editPanelCtg[0].name;
-    menuStore.requestCtgBody.img = menuStore.editPanelCtg[0].img;
+    menuStore.requestCtgBody.name = menuStore.editPanelCtg.name;
+    menuStore.requestCtgBody.img = menuStore.editPanelCtg.img;
     menuStore.updateCtg();
   }
 };
@@ -104,7 +104,7 @@ const editCtg = async () => {
 .panel-content_left * {
   margin-bottom: 1rem;
 }
- 
+
 .panel-content_right {
   margin-bottom: 3rem;
 }
