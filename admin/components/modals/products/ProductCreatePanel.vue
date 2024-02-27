@@ -2,14 +2,14 @@
   <div id="category-create-panel">
     <div class="edit-panel_wrapper">
       <div class="edit-panel">
-        <button v-on:click="menuStore.createPrdOpener()" class="panel-closer">
-          <img src="../assets/img/x.svg" alt="Create Panel Closer" />
+        <button v-on:click="productStore.createPrdOpener()" class="panel-closer">
+          <img src="@/assets/img/x.svg" alt="Create Panel Closer" />
         </button>
         <div class="panel-content">
           <div class="panel-content_left">
             <label class="panel-content_header" for="newPrdName">New Product Name:</label
             ><input
-              v-model="menuStore.requestPrdBody.name"
+              v-model="productStore.requestPrdBody.name"
               class="panel-content_text"
               type="text"
               name="newPrdName"
@@ -18,7 +18,7 @@
             />
             <label class="panel-content_header" for="newPrdPrice">New Product Price:</label
             ><input
-              v-model="menuStore.requestPrdBody.price"
+              v-model="productStore.requestPrdBody.price"
               class="panel-content_text"
               type="text"
               name="newPrdPrice"
@@ -26,15 +26,15 @@
               placeholder="New Price"
             />
             <label class="panel-content_header" for="newPrdType">New Product Type:</label>
-            <select name="categories" id="categories" v-model="menuStore.requestPrdBody.type">
+            <select name="categories" id="categories" v-model="productStore.requestPrdBody.type">
               <option value="" disabled selected>Select a category</option>
-              <option v-for="ctg in menuStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
+              <option v-for="ctg in productStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
             </select>
           </div>
         </div>
         <div class="panel_buttons">
-          <button v-on:click="menuStore.createPrd(menuStore.requestPrdBody)">
-            <img src="../assets/img/check.svg" alt="Accept Product" />Accept
+          <button v-on:click="productStore.createPrd(productStore.requestPrdBody)">
+            <img src="../../../assets/img/check.svg" alt="Accept Product" />Accept
           </button>
         </div>
       </div>
@@ -43,9 +43,9 @@
 </template>
 
 <script setup>
-import { useMenuStore } from '~/stores/menu';
+import { useProductStore } from '~/stores/products';
 
-const menuStore = useMenuStore();
+const productStore = useProductStore();
 </script>
 
 <style>

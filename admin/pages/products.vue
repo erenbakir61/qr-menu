@@ -2,6 +2,10 @@
   <user-menu />
   <div id="panel_content">
     <Sidebar />
-    <products-panel />
+    <ProductsPanel />
   </div>
 </template>
+
+<script setup>
+import ProductsPanel from '~/features/products/ProductsPanel.vue';
+</script>

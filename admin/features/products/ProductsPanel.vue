@@ -1,41 +1,45 @@
 <script setup>
 import { useMenuStore } from '~/stores/menu';
 import { onBeforeMount, ref } from 'vue';
+import { useProductStore } from '~/stores/products';
+import ProductsEditPanel from '~/components/modals/products/ProductsEditPanel.vue';
+import ProductCreatePanel from '~/components/modals/products/ProductCreatePanel.vue';
 
 const menuStore = useMenuStore();
+const productStore = useProductStore();
 const currentCtg = ref('All');
 
 const ctgChange = () => {
-  menuStore.filteredPrd = [];
+  productStore.filteredProducts = [];
   if (currentCtg.value === 'All') {
-    menuStore.filteredPrd = menuStore.products;
+    productStore.filteredProducts = productStore.products;
   }
-  for (let prd of menuStore.products) {
+  for (let prd of productStore.products) {
     if (prd.type === currentCtg.value) {
-      menuStore.filteredPrd.push(prd);
+      productStore.filteredProducts.push(prd);
     }
   }
-  return menuStore.filteredPrd.value;
+  return productStore.filteredProducts.value;
 };
 
 onBeforeMount(async () => {
-  await fetch(menuStore.prdFetchUrl)
+  await fetch(productStore.prdFetchUrl)
     .then((response) => response.json())
     .then((json) => {
-      menuStore.products = json.message;
-      menuStore.filteredPrd = json.message;
+      productStore.products = json.message;
+      productStore.filteredProducts = json.message;
     });
-  await fetch(menuStore.ctgFetchUrl)
+  await fetch(productStore.ctgFetchUrl)
     .then((response) => response.json())
-    .then((json) => (menuStore.categories = json.message));
+    .then((json) => (productStore.categories = json.message));
 });
 </script>
 
 <template>
   <div id="products-panel">
     <div class="row">
-      <button v-on:click="menuStore.createPrdOpener" class="create-category">
-        <img src="../assets/img/add.svg" alt="Add Product" />
+      <button v-on:click="productStore.createPrdOpener" class="create-category">
+        <img src="@/assets/img/add.svg" alt="Add Product" />
       </button>
       <div class="products-content container">
         <div class="products-panel_header">
@@ -43,7 +47,7 @@ onBeforeMount(async () => {
           <div class="category_list">
             <select name="categories" id="categories" v-model="currentCtg" v-on:change="ctgChange">
               <option value="All">All</option>
-              <option v-for="ctg in menuStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
+              <option v-for="ctg in productStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
             </select>
           </div>
         </div>
@@ -52,31 +56,17 @@ onBeforeMount(async () => {
             <h4>Product Name <span>Price</span></h4>
           </div>
           <div class="products-body">
-            <div v-show="!(menuStore.products.length > 0)">
+            <div v-show="!(productStore.products.length > 0)">
               <img src="/loading.svg" alt="Loader" style="width: 5rem; margin: 0 auto" />
             </div>
-            <ul class="products-list">
-              <li v-for="prd in menuStore.filteredPrd" class="products-item">
-                <p>
-                  {{ prd.name }}<span>{{ prd.price + ' ₺' }}</span>
-                </p>
-                <div class="edit-buttons">
-                  <button v-on:click="menuStore.deletePrd(prd)">
-                    <img src="../assets/img/trash.svg" alt="Delete" />
-                  </button>
-                  <button v-on:click="menuStore.productEditPanelOpener(prd)">
-                    <img src="../assets/img/edit.svg" alt="Edit" />
-                  </button>
-                </div>
-              </li>
-            </ul>
+            <ProductsList />
           </div>
         </div>
       </div>
     </div>
   </div>
-  <ProductsEditPanel v-if="menuStore.productEditPanelIsOpen" />
-  <ProductCreatePanel v-if="menuStore.productCreatePanelIsOpen" />
+  <ProductsEditPanel v-if="productStore.productEditPanelIsOpen" />
+  <ProductCreatePanel v-if="productStore.productCreatePanelIsOpen" />
 </template>
 
 <style>
@@ -144,31 +134,9 @@ onBeforeMount(async () => {
   margin-top: 3rem;
 }
 
-.products-body .products-item {
-  position: relative;
-  padding: 0.4rem 1rem;
-}
-
-.products-body .products-item:nth-child(odd) {
-  background-color: #f4f5f6;
-}
-
 .products-body .products-item span {
   position: absolute;
   left: 50%;
-}
-
-.products-body .products-item .edit-buttons {
-  display: inline;
-  position: absolute;
-  top: 0.5rem;
-  right: 1rem;
-}
-
-.products-body .products-item .edit-buttons button {
-  margin-right: 1rem;
-  background-color: transparent;
-  border: 0;
 }
 
 .create-category {

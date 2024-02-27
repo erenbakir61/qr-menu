@@ -2,8 +2,8 @@
   <div id="product-edit-panel">
     <div class="edit-panel_wrapper">
       <div class="edit-panel">
-        <button v-on:click="menuStore.productEditPanelOpener()" class="panel-closer">
-          <img src="../assets/img/x.svg" alt="Edit Panel Closer" />
+        <button v-on:click="productStore.productEditPanelOpener()" class="panel-closer">
+          <img src="../../../assets/img/x.svg" alt="Edit Panel Closer" />
         </button>
         <div class="panel-content">
           <div class="panel-content_main">
@@ -14,7 +14,7 @@
               name="newCtgName"
               id="newCtgName"
               placeholder="New Name"
-              v-bind:value="menuStore.editPanelPrd.name"
+              v-bind:value="productStore.editPanelPrd.name"
             />
             <label class="panel-content_header" for="newCtgPrc">New Product Price: </label
             ><input
@@ -27,25 +27,25 @@
               name="newCtgPrc"
               id="newCtgPrc"
               placeholder="New Price"
-              v-bind:value="menuStore.editPanelPrd.price"
+              v-bind:value="productStore.editPanelPrd.price"
               v-on:keydown="priceInputValueCheck($event)"
             />
             <label class="panel-content_header" for="newPrdType">New Product Type:</label>
             <select name="categories" id="categories">
-              <option v-bind:value="menuStore.editPanelPrd.type" selected>Select a category</option>
-              <option v-for="ctg in menuStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
+              <option v-bind:value="productStore.editPanelPrd.type" selected>Select a category</option>
+              <option v-for="ctg in productStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
             </select>
           </div>
-          <p style="color: red; position: absolute" v-if="menuStore.productEditPanelError">
+          <p style="color: red; position: absolute" v-if="productStore.productEditPanelError">
             Fiyat 0-999 arasi olmalidir.
           </p>
         </div>
         <div class="panel_buttons">
-          <button v-on:click="menuStore.deletePrd(menuStore.editPanelPrd)">
-            <img src="../assets/img/trash.svg" alt="Delete Category" />Delete
+          <button v-on:click="productStore.deletePrd(productStore.editPanelPrd)">
+            <img src="../../../assets/img/trash.svg" alt="Delete Category" />Delete
           </button>
-          <button v-on:click="menuStore.updatePrd(menuStore.editPanelPrd)">
-            <img src="../assets/img/check.svg" alt="Accept Category" />Accept
+          <button v-on:click="productStore.updatePrd(productStore.editPanelPrd)">
+            <img src="../../../assets/img/check.svg" alt="Accept Category" />Accept
           </button>
         </div>
       </div>
@@ -54,9 +54,9 @@
 </template>
 
 <script setup>
-import { useMenuStore } from '~/stores/menu';
+import { useProductStore } from '~/stores/products';
 
-const menuStore = useMenuStore();
+const productStore = useProductStore();
 const priceInputValueCheck = function (event) {
   if (isNaN(event.key) && event.key !== 'Backspace') {
     event.preventDefault();

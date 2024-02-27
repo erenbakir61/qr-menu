@@ -3,7 +3,7 @@
     <div class="edit-panel_wrapper">
       <div class="edit-panel">
         <button v-on:click="menuStore.createCtgOpener()" class="panel-closer">
-          <img src="../assets/img/x.svg" alt="Edit Panel Closer" />
+          <img src="../../../assets/img/x.svg" alt="Edit Panel Closer" />
         </button>
         <div class="panel-content">
           <div class="panel-content_left">
@@ -21,7 +21,9 @@
           </div>
         </div>
         <div class="panel_buttons">
-          <button v-on:click="createImg"><img src="../assets/img/check.svg" alt="Accept Category" />Accept</button>
+          <button v-on:click="createImg">
+            <img src="../../../assets/img/check.svg" alt="Accept Category" />Accept
+          </button>
         </div>
       </div>
     </div>
