@@ -14,7 +14,7 @@
               name="newCtgName"
               id="newCtgName"
               placeholder="New Name"
-              v-bind:value="productStore.editPanelPrd.name"
+              v-model="productStore.editPanelPrd.name"
             />
             <label class="panel-content_header" for="newCtgPrc">New Product Price: </label
             ><input
@@ -27,8 +27,7 @@
               name="newCtgPrc"
               id="newCtgPrc"
               placeholder="New Price"
-              v-bind:value="productStore.editPanelPrd.price"
-              v-on:keydown="priceInputValueCheck($event)"
+              v-model="productStore.editPanelPrd.price"
             />
             <label class="panel-content_header" for="newPrdType">New Product Type:</label>
             <select name="categories" id="categories">
@@ -42,10 +41,10 @@
         </div>
         <div class="panel_buttons">
           <button v-on:click="productStore.deletePrd(productStore.editPanelPrd)">
-            <img src="../../../assets/img/trash.svg" alt="Delete Category" />Delete
+            <img src="@/assets/img/trash.svg" alt="Delete Category" />Delete
           </button>
           <button v-on:click="productStore.updatePrd(productStore.editPanelPrd)">
-            <img src="../../../assets/img/check.svg" alt="Accept Category" />Accept
+            <img src="@/assets/img/check.svg" alt="Accept Category" />Accept
           </button>
         </div>
       </div>

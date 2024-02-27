@@ -20,7 +20,7 @@ export const useProductStore = defineStore('productsStore', {
       this.editPanelPrd = {};
       if (this.productEditPanelIsOpen === false) {
         this.productEditPanelIsOpen = true;
-        this.editPanelPrd = product;
+        this.editPanelPrd = { ...product };
       } else {
         this.productEditPanelIsOpen = false;
       }
