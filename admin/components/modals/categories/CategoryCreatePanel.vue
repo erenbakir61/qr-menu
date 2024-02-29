@@ -2,14 +2,14 @@
   <div id="category-create-panel">
     <div class="edit-panel_wrapper">
       <div class="edit-panel">
-        <button v-on:click="menuStore.createCtgOpener()" class="panel-closer">
-          <img src="../../../assets/img/x.svg" alt="Edit Panel Closer" />
+        <button v-on:click="categoryStore.categoryCreateModalOpener()" class="panel-closer">
+          <img src="@/assets/img/x.svg" alt="Edit Panel Closer" />
         </button>
         <div class="panel-content">
           <div class="panel-content_left">
             <label class="panel-content_header" for="newCtgName">New Category Name:</label
             ><input
-              v-model="menuStore.requestCtgBody.name"
+              v-model="categoryStore.requestCtgBody.name"
               class="panel-content_text"
               type="text"
               name="newCtgName"
@@ -21,9 +21,7 @@
           </div>
         </div>
         <div class="panel_buttons">
-          <button v-on:click="createImg">
-            <img src="../../../assets/img/check.svg" alt="Accept Category" />Accept
-          </button>
+          <button v-on:click="createImg"><img src="@/assets/img/check.svg" alt="Accept Category" />Accept</button>
         </div>
       </div>
     </div>
@@ -31,22 +29,27 @@
 </template>
 
 <script setup>
-import { useMenuStore } from '~/stores/menu';
+import { useCategoryStore } from '~/stores/categories';
 
-const menuStore = useMenuStore();
+const categoryStore = useCategoryStore();
 
 const createImg = async () => {
   const fileInput = document.querySelector('.panel-content_upload').files[0];
+  const fileExtension = fileInput.name.split('.').slice(-1)[0];
   const formData = new FormData();
   formData.append('categoryImage', fileInput);
 
-  await fetch('http://localhost:3000/public/images', {
-    method: 'POST',
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then((data) => menuStore.createCtg(data.filename))
-    .then(menuStore.categories.push(menuStore.requestCtgBody));
+  if (fileExtension === 'jpg' || fileExtension === 'png' || fileExtension === 'jpeg') {
+    await fetch('http://localhost:3000/public/images', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => categoryStore.createCategory(data.filename))
+      .then(categoryStore.categories.push(categoryStore.requestCtgBody));
+  } else {
+    console.log('austin we have a problem');
+  }
 };
 </script>
 

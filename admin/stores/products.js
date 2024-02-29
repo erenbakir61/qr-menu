@@ -29,11 +29,17 @@ export const useProductStore = defineStore('productsStore', {
       this.requestPrdBody = {};
       this.productCreatePanelIsOpen = this.productCreatePanelIsOpen === false;
     },
+    priceInputValueCheck(event) {
+      if (isNaN(event.key) && event.key !== 'Backspace') {
+        event.preventDefault();
+      }
+    },
     async deletePrd(product) {
-      console.log(product);
-      await fetch(this.prdFetchUrl + product._id, { method: 'DELETE' })
-        .then(this.filteredProducts.pop(product))
-        .then((this.productEditPanelIsOpen = false));
+      await fetch(this.prdFetchUrl + product._id, { method: 'DELETE' }).then(() => {
+        const indexElement = this.filteredProducts.findIndex((i) => i._id === product._id);
+        this.filteredProducts.splice(indexElement, 1);
+        this.productEditPanelIsOpen = false;
+      });
     },
     async createPrd(product) {
       await fetch(this.prdFetchUrl, {

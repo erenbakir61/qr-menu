@@ -3,7 +3,7 @@
     <div class="edit-panel_wrapper">
       <div class="edit-panel">
         <button v-on:click="productStore.productEditPanelOpener()" class="panel-closer">
-          <img src="../../../assets/img/x.svg" alt="Edit Panel Closer" />
+          <img src="@/assets/img/x.svg" alt="Edit Panel Closer" />
         </button>
         <div class="panel-content">
           <div class="panel-content_main">
@@ -23,11 +23,11 @@
               min="0"
               max="999"
               inputmode="numeric"
-              pattern="[0-9]"
               name="newCtgPrc"
               id="newCtgPrc"
               placeholder="New Price"
               v-model="productStore.editPanelPrd.price"
+              v-on:keydown="productStore.priceInputValueCheck($event)"
             />
             <label class="panel-content_header" for="newPrdType">New Product Type:</label>
             <select name="categories" id="categories">
@@ -43,7 +43,7 @@
           <button v-on:click="productStore.deletePrd(productStore.editPanelPrd)">
             <img src="@/assets/img/trash.svg" alt="Delete Category" />Delete
           </button>
-          <button v-on:click="productStore.updatePrd(productStore.editPanelPrd)">
+          <button v-on:click="editProduct(productStore.editPanelPrd)">
             <img src="@/assets/img/check.svg" alt="Accept Category" />Accept
           </button>
         </div>
@@ -56,10 +56,16 @@
 import { useProductStore } from '~/stores/products';
 
 const productStore = useProductStore();
-const priceInputValueCheck = function (event) {
-  if (isNaN(event.key) && event.key !== 'Backspace') {
-    event.preventDefault();
-  }
+
+const editProduct = async (product) => {
+  await fetch(productStore.prdFetchUrl + product._id, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(product),
+  })
+    .then((response) => response.json())
+    .then((product = productStore.editPanelPrd))
+    .then((productStore.productEditPanelIsOpen = false));
 };
 </script>
 

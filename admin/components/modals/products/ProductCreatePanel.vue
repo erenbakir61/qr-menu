@@ -20,10 +20,14 @@
             ><input
               v-model="productStore.requestPrdBody.price"
               class="panel-content_text"
-              type="text"
+              type="number"
+              min="0"
+              max="999"
+              inputmode="numeric"
               name="newPrdPrice"
               id="newPrdPrice"
               placeholder="New Price"
+              v-on:keydown="productStore.priceInputValueCheck($event)"
             />
             <label class="panel-content_header" for="newPrdType">New Product Type:</label>
             <select name="categories" id="categories" v-model="productStore.requestPrdBody.type">
@@ -34,7 +38,7 @@
         </div>
         <div class="panel_buttons">
           <button v-on:click="productStore.createPrd(productStore.requestPrdBody)">
-            <img src="../../../assets/img/check.svg" alt="Accept Product" />Accept
+            <img src="@/assets/img/check.svg" alt="Accept Product" />Accept
           </button>
         </div>
       </div>

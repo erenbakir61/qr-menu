@@ -2,8 +2,8 @@
   <div id="category-edit-panel">
     <div class="edit-panel_wrapper">
       <div class="edit-panel">
-        <button v-on:click="menuStore.editPanelOpener" class="panel-closer">
-          <img src="../../../assets/img/x.svg" alt="Edit Panel Closer" />
+        <button v-on:click="categoryStore.categoryEditModalOpener" class="panel-closer">
+          <img src="@/assets/img/x.svg" alt="Edit Panel Closer" />
         </button>
         <div class="panel-content">
           <div class="panel-content_left">
@@ -14,17 +14,17 @@
               name="newCtgName"
               id="newCtgName"
               placeholder="New Name"
-              v-bind:value="menuStore.editPanelCtg.name"
+              v-model="categoryStore.editPanelCtg.name"
             />
             <label class="panel-content_header" for="newCtgImg">New Category Image: </label>
             <input class="panel-content_upload" type="file" name="newCtgImg" id="newCtgImg" />
           </div>
         </div>
         <div class="panel_buttons">
-          <button v-on:click="deleteCtg(menuStore.editPanelCtg)">
-            <img src="../../../assets/img/trash.svg" alt="Delete Category" />Delete
+          <button v-on:click="categoryStore.deleteCategory(categoryStore.editPanelCtg)">
+            <img src="@/assets/img/trash.svg" alt="Delete Category" />Delete
           </button>
-          <button v-on:click="editCtg"><img src="../../../assets/img/check.svg" alt="Accept Category" />Accept</button>
+          <button v-on:click="editCtg"><img src="@/assets/img/check.svg" alt="Accept Category" />Accept</button>
         </div>
       </div>
     </div>
@@ -32,15 +32,14 @@
 </template>
 
 <script setup>
-import { useMenuStore } from '~/stores/menu';
+import { useCategoryStore } from '~/stores/categories';
 
-const menuStore = useMenuStore();
+const categoryStore = useCategoryStore();
 
 const deleteCtg = async (category) => {
-  await fetch(menuStore.ctgFetchUrl + category._id, { method: 'DELETE' }).then(() => {
-    menuStore.categories.pop(category);
-    menuStore.categoryEditPanelIsOpen = false;
-    menuStore.editPanelCtg = [];
+  await fetch(categoryStore.ctgFetchUrl + category._id, { method: 'GET' }).then(() => {
+    const categoryIndex = categoryStore.categories.indexOf(category);
+    console.log(categoryIndex);
   });
 };
 
@@ -49,22 +48,21 @@ const editCtg = async () => {
   if (fileInput) {
     const formData = new FormData();
     formData.append('categoryImage', fileInput);
-    await fetch(menuStore.ctgImgFetchUrl, {
+    await fetch(categoryStore.ctgImgFetchUrl, {
       method: 'POST',
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.filename);
-        menuStore.requestCtgBody.name = menuStore.editPanelCtg.name;
-        menuStore.requestCtgBody.img = data.filename;
-        menuStore.updateCtg();
-        menuStore.editPanelCtg.img = data.filename;
+        categoryStore.requestCtgBody.name = categoryStore.editPanelCtg.name;
+        categoryStore.requestCtgBody.img = data.filename;
+        categoryStore.updateCategory();
+        categoryStore.editPanelCtg.img = data.filename;
       });
   } else {
-    menuStore.requestCtgBody.name = menuStore.editPanelCtg.name;
-    menuStore.requestCtgBody.img = menuStore.editPanelCtg.img;
-    menuStore.updateCtg();
+    categoryStore.requestCtgBody.name = categoryStore.editPanelCtg.name;
+    categoryStore.requestCtgBody.img = categoryStore.editPanelCtg.img;
+    await categoryStore.updateCategory();
   }
 };
 </script>
