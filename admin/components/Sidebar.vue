@@ -10,7 +10,10 @@
           <img src="../assets/img/products.svg" alt="Products" />
           <NuxtLink to="products">Products</NuxtLink>
         </li>
-        <li class="sidebar-item"><img src="../assets/img/log.svg" alt="Logs" /><a href="#">Logs</a></li>
+        <li class="sidebar-item">
+          <img src="../assets/img/log.svg" alt="Logs" />
+          <NuxtLink to="logs">Logs</NuxtLink>
+        </li>
       </ul>
     </div>
   </div>
@@ -57,3 +60,4 @@
   }
 }
 </style>
+<script setup lang="ts"></script>

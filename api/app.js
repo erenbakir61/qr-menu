@@ -13,6 +13,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const menuRouter = require('./src/modules/menu/menu.routes');
 const categoryRouter = require('./src/modules/category/category.routes');
+const logRouter = require('./src/modules/log/log.routes')
 
 const app = express();
 const mongoURI = 'mongodb://127.0.0.1:27017/menu';
@@ -33,6 +34,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/menu', menuRouter);
 app.use('/category', categoryRouter);
+app.use('/log', logRouter);
 
 // Multer Setup
 const storage = multer.diskStorage({

@@ -27,7 +27,7 @@ import CategoriesList from '~/components/CategoriesList.vue';
 const categoryStore = useCategoryStore();
 
 onMounted(async () => {
-  fetch(categoryStore.ctgFetchUrl)
+  await fetch(categoryStore.ctgFetchUrl)
     .then((response) => response.json())
     .then((json) => (categoryStore.categories = json.message));
 });

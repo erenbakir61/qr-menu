@@ -1,9 +1,9 @@
 <script setup>
-import { useMenuStore } from '~/stores/menu';
+import { useLogStore } from '~/stores/logs';
 import { useProductStore } from '~/stores/products';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount } from 'vue';
 
-const menuStore = useMenuStore();
+const logStore = useLogStore();
 const productStore = useProductStore();
 
 onBeforeMount(async () => {
@@ -15,7 +15,7 @@ onBeforeMount(async () => {
     });
   await fetch(productStore.ctgFetchUrl)
     .then((response) => response.json())
-    .then((json) => (productStore.categories = json.message));
+    .then((json) => (productStore.categories = json.message))
 });
 </script>
 

@@ -36,6 +36,9 @@
             </select>
           </div>
         </div>
+        <p style="color: red; position: absolute" v-if="productStore.productModalError">
+          {{ productStore.productModalErrorMessage }}
+        </p>
         <div class="panel_buttons">
           <button v-on:click="productStore.createPrd(productStore.requestPrdBody)">
             <img src="@/assets/img/check.svg" alt="Accept Product" />Accept

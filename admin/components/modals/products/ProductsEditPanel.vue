@@ -35,8 +35,8 @@
               <option v-for="ctg in productStore.categories" v-bind:value="ctg.name">{{ ctg.name }}</option>
             </select>
           </div>
-          <p style="color: red; position: absolute" v-if="productStore.productEditPanelError">
-            Fiyat 0-999 arasi olmalidir.
+          <p style="color: red; position: absolute" v-if="productStore.productModalError">
+            {{ productStore.productModalErrorMessage }}
           </p>
         </div>
         <div class="panel_buttons">
@@ -64,8 +64,17 @@ const editProduct = async (product) => {
     body: JSON.stringify(product),
   })
     .then((response) => response.json())
-    .then((product = productStore.editPanelPrd))
-    .then((productStore.productEditPanelIsOpen = false));
+    .then((data) => {
+      if (data.status === 'success') {
+        const productIndex = productStore.filteredProducts.findIndex((prd) => prd._id === product._id);
+        productStore.filteredProducts[productIndex] = product;
+        productStore.productEditPanelOpener(product);
+      } else {
+        productStore.productModalError = true;
+        productStore.productModalErrorMessage = data.message;
+        console.log(data);
+      }
+    });
 };
 </script>
 

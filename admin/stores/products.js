@@ -11,22 +11,27 @@ export const useProductStore = defineStore('productsStore', {
       editPanelPrd: {},
       requestPrdBody: {},
       productEditPanelIsOpen: false,
-      productEditPanelError: false,
+      productModalError: false,
+      productModalErrorMessage: '',
       productCreatePanelIsOpen: false,
     };
   },
   actions: {
     productEditPanelOpener(product) {
       this.editPanelPrd = {};
-      if (this.productEditPanelIsOpen === false) {
+      if (this.productEditPanelIsOpen) {
+        this.productEditPanelIsOpen = false;
+        this.productModalError = false;
+        this.productModalErrorMessage = '';
+      } else {
         this.productEditPanelIsOpen = true;
         this.editPanelPrd = { ...product };
-      } else {
-        this.productEditPanelIsOpen = false;
       }
     },
     createPrdOpener() {
       this.requestPrdBody = {};
+      this.productModalError = false;
+      this.productModalErrorMessage = '';
       this.productCreatePanelIsOpen = this.productCreatePanelIsOpen === false;
     },
     priceInputValueCheck(event) {
@@ -48,8 +53,16 @@ export const useProductStore = defineStore('productsStore', {
         body: JSON.stringify(product),
       })
         .then((response) => response.json())
-        .then((data) => this.filteredProducts.push(data.product))
-        .then((this.productCreatePanelIsOpen = false));
+        .then((data) => {
+          if (data.status === 'success') {
+            this.filteredProducts.push(data.product);
+            this.createPrdOpener();
+          } else {
+            this.productModalError = true;
+            this.productModalErrorMessage = data.message;
+            console.log(data);
+          }
+        });
     },
     async updatePrd(product) {
       if (product.price >= 0 && product.price <= 999) {
