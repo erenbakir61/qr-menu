@@ -23,7 +23,6 @@ onMounted(async () => {
     .then((response) => response.json())
     .then((data) => {
       logStore.logs = data.message;
-      console.log(data.message);
     });
 });
 </script>

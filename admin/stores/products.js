@@ -60,7 +60,6 @@ export const useProductStore = defineStore('productsStore', {
           } else {
             this.productModalError = true;
             this.productModalErrorMessage = data.message;
-            console.log(data);
           }
         });
     },

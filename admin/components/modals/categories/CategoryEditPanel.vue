@@ -39,7 +39,6 @@ const categoryStore = useCategoryStore();
 const deleteCtg = async (category) => {
   await fetch(categoryStore.ctgFetchUrl + category._id, { method: 'GET' }).then(() => {
     const categoryIndex = categoryStore.categories.indexOf(category);
-    console.log(categoryIndex);
   });
 };
 

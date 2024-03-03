@@ -7,10 +7,12 @@ const findAll = async () => {
     let data
     try {
         data = await Menu.find()
-        if (data.length == 0) {
+        if (data.length === 0) {
+            await createLog('user', 'All Fetching Failed', 'GET')
             return {status: "failed", data: null, message: "Kayit bulunamadi"};
         }
         else {
+            await createLog('user', 'All Fetching Successfully', 'get')
             return {status: "ok", message: data}
         }
     } catch (err) {
@@ -70,17 +72,22 @@ const createProduct = async (req) => {
     let product = new Menu({name, price, type})
     try {
         if (price >= 999 || price <= 0 || isNaN(price)) {
+            await createLog('user', 'incorrect product price', 'post')
             return {status: "failed", message: "Price Error"}
         }
         else if (!(product.type)) {
+            await createLog('user', 'incorrect product type', 'post')
+
             return {status: "failed", message: "Type Error"}
         }
         else {
             await product.save()
+            await createLog('user', `${product.name} - product added successfully`, 'post')
             return {status: "success", message: "Product Created Successfully", product}
         }
     }
     catch (err) {
+        await createLog('user', 'product wasnt added', 'post')
         return{status: "failed", message: err}
     }
 }
@@ -89,13 +96,16 @@ const deleteProduct = async (id) => {
     try {
         let product = await Menu.findByIdAndDelete(id)
         if (product != null) {
-            return {status: "ok", message: 'Kayit basariyla silindi', product}
+            await createLog('user', `${product.name} - product deleted successfully`, 'delete')
+            return {status: "successfull", message: 'Kayit basariyla silindi', product}
         }
         else {
+            await createLog('user', 'product wasnt deleted successfully', 'delete')
             return {status: "failed", message: 'Kayit bulunamadi'}
         }
     }
     catch (err) {
+        await createLog('user', 'product wasnt deleted successfully', 'delete')
         return {status: "failed", message: err}
     }
 }
@@ -105,13 +115,16 @@ const updateProduct = async (id, reqProd) => {
         const {name, price, type} = reqProd
         const oldData = (await findById(id)).message
         if (price >= 999 || price <= 0 || isNaN(price)) {
+            await createLog('user', 'incorrect product price', 'patch')
             return {status: "failed", message: "Price Error"}
         }
         else if (!(type)) {
+            await createLog('user', 'incorrect product type', 'patch')
             return {status: "failed", message: "Type Error"}
         }
         else {
             await Menu.findByIdAndUpdate(id, { $set: {name, price, type}})
+            await createLog('user', 'product successfully updated', 'patch')
             return {status: 'success', message: 'Product Updated Successfully', reqProd, oldData}
         }
 
@@ -122,14 +135,16 @@ const updateProduct = async (id, reqProd) => {
 }
 
 const createLog = async (user, info, method) => {
-    const log = { user: user, info: info, method: method };
+    let log = {
+        user: user,
+        info: info,
+        method: method
+    }
     await fetch('http://localhost:3000/log/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(log),
     })
-      .then((response) => response.json)
-      .then((data) => console.log(data))
 }
 
 module.exports = {

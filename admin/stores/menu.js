@@ -49,7 +49,6 @@ export const useMenuStore = defineStore('menuStore', {
       this.productCreatePanelIsOpen = this.productCreatePanelIsOpen === false;
     },
     async deletePrd(product) {
-      console.log(product);
       await fetch(this.prdFetchUrl + product._id, { method: 'DELETE' })
         .then(this.filteredPrd.pop(product))
         .then((this.productEditPanelIsOpen = false));
@@ -87,7 +86,6 @@ export const useMenuStore = defineStore('menuStore', {
       } else this.productEditPanelError = true;
     },
     async updateCtg() {
-      console.log(this.requestCtgBody);
       await fetch(this.ctgFetchUrl + this.editPanelCtg._id, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },

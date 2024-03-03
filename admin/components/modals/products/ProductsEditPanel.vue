@@ -72,7 +72,6 @@ const editProduct = async (product) => {
       } else {
         productStore.productModalError = true;
         productStore.productModalErrorMessage = data.message;
-        console.log(data);
       }
     });
 };

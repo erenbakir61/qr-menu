@@ -14,6 +14,9 @@
         </td>
         <td>{{ log.info }}</td>
         <td>{{ log.creatingDate.split('T')[0] }}</td>
+        <td>
+          <button v-on:click="logStore.deleteLog(log)"><img src="@/assets/img/trash.svg" alt="Delete Log" /></button>
+        </td>
       </tr>
     </table>
   </div>
@@ -26,6 +29,13 @@ const logStore = useLogStore();
 </script>
 
 <style>
+.log-item button {
+  background-color: #f4f5f6;
+  border: 0;
+  padding: 0.25rem;
+  width: 2.5rem;
+  margin-left: 1rem;
+}
 .logs-list {
   width: 100%;
 }
@@ -63,7 +73,7 @@ const logStore = useLogStore();
 }
 .logs-list tr {
   display: grid;
-  grid-template-columns: 5rem 5rem auto 15%;
+  grid-template-columns: 5rem 5rem auto 15% 3rem;
 }
 .log-item {
   margin-bottom: 0.5rem;

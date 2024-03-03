@@ -18,11 +18,7 @@ export const useLogStore = defineStore('logsStore', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(log),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
+      });
     },
     async deleteLog(log) {
       await fetch(this.logFetchUrl + log._id, { method: 'DELETE' }).then(() => {

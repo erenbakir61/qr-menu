@@ -47,9 +47,8 @@ const createLog = async (req) => {
 
 const deleteLog = async (id) => {
   try {
-    let log
+    let log = await Log.findByIdAndDelete(id)
     if (log != null) {
-      log = await Log.findByIdAndDelete(id)
       return {status: "ok", message: 'Kayit basariyla silindi', log}
     }
     else {
