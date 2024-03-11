@@ -41,10 +41,11 @@ onMounted(async () => {
   overflow-x: hidden;
   position: relative;
   display: inline-block;
-  margin-left: 5rem;
+  margin-left: 3rem;
+  margin-bottom: 2rem;
   padding: 5rem 0;
   background-color: #ffffff;
-  border-radius: 2rem;
+  border-radius: 1rem;
   box-shadow:
     0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);

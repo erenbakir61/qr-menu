@@ -73,10 +73,12 @@ onBeforeMount(async () => {
 #products-panel {
   width: 65%;
   position: relative;
-  margin-left: 5rem;
+  margin-left: 3rem;
+  margin-bottom: 2rem;
   padding: 5rem 5rem;
   background-color: #ffffff;
-  border-radius: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
   box-shadow:
     0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -85,7 +87,7 @@ onBeforeMount(async () => {
 .products-wrapper {
   margin-top: 5rem;
   padding-bottom: 2rem;
-  border-radius: 2rem;
+  border-radius: 1rem;
   box-shadow:
     0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);

@@ -22,10 +22,10 @@
 <style>
 #sidebar {
   background-color: #ffffff;
-  width: 15%;
+  width: 20%;
   height: 50vh;
   margin-left: 5%;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   box-shadow:
     0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -34,13 +34,14 @@
 #sidebar .sidebar-list {
   list-style: none;
   padding: 1.5rem 0;
-  text-align: center;
+  text-align: start;
 }
 
 #sidebar .sidebar-list .sidebar-item {
-  margin-top: 3rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: start;
 }
 
 #sidebar .sidebar-list .sidebar-item img {

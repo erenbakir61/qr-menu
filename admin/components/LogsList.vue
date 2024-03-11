@@ -1,7 +1,7 @@
 <template>
   <div class="logs-list_wrapper">
     <table class="logs-list">
-      <tr>
+      <tr id="headers">
         <th>User</th>
         <th>Method</th>
         <th>Info</th>
@@ -34,7 +34,7 @@ const logStore = useLogStore();
   border: 0;
   padding: 0.25rem;
   width: 2.5rem;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 .logs-list {
   width: 100%;
@@ -65,7 +65,6 @@ const logStore = useLogStore();
   padding: 12px 0;
   text-align: left;
   color: rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid #ddd;
 }
 .logs-list td,
 .logs-list th {
@@ -74,6 +73,14 @@ const logStore = useLogStore();
 .logs-list tr {
   display: grid;
   grid-template-columns: 5rem 5rem auto 15% 3rem;
+}
+.logs-list tr#headers {
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+
+  position: sticky;
+  top: 0;
 }
 .log-item {
   margin-bottom: 0.5rem;
