@@ -1,5 +1,4 @@
 <template>
-  <user-menu />
   <div id="panel_content">
     <Sidebar />
     <ProductsPanel />
