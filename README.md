@@ -1,15 +1,15 @@
 # QR-Menu
 
- #### API
+ # API
  
- ### API Installation
+ ## API Installation
  - ``cd api``
  - ``npm run dev``
 
  You should see the message **"connected database"**
 
 
-  ### API Features Endpoints
+ ## API Features Endpoints
  GET/POST/PATCH/DELETE - Products
  
  GET/POST/PATCH/DELETE - Categories
@@ -18,14 +18,14 @@
 
 
 
- #### Admin Panel Installation 
+ # Admin Panel Installation 
 
  - ``cd admin``
  - ``npm run dev``
 
 
 
- #### Client Installation 
+ # Client Installation 
 
  - ``cd client``
  - ``npm run dev``
