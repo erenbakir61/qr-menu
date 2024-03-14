@@ -8,6 +8,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const multer = require('multer');
 const crypto = require('crypto');
+const fs = require('fs')
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');

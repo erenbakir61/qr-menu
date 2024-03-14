@@ -8,7 +8,7 @@ const findAll = async () => {
     try {
         data = await Menu.find()
         if (data.length === 0) {
-            await createLog('user', 'All Fetching Failed', 'GET')
+            await createLog('user', 'All Fetching Failed', 'get')
             return {status: "failed", data: null, message: "Kayit bulunamadi"};
         }
         else {

@@ -7,35 +7,35 @@ const findById = async (req, res) => {
     res.send(await categoryService.findById(req.params.prodId))
 }
 
-const createProduct = async (req, res) => {
-    res.send(await categoryService.createProduct(req))
+const createCategory = async (req, res) => {
+    res.send(await categoryService.createCategory(req))
 }
 
-const deleteProduct = async (req, res) => {
-    res.send(await categoryService.deleteProduct(req.params.prodId))
+const deleteCategory = async (req, res) => {
+    res.send(await categoryService.deleteCategory(req.params.prodId))
 }
 
-const updateProduct = async (req,res) => {
-    res.send(await categoryService.updateProduct(req.params.prodId, req.body))
+const updateCategory = async (req,res) => {
+    res.send(await categoryService.updateCategory(req.params.prodId, req.body))
 }
 
-const deleteProductFail = async (req, res) => {
+const deleteCategoryFail = async (req, res) => {
     res.send(`Lutfen ID giriniz`).status(400)
 }
-const createProductFail = async (req, res) => {
+const createCategoryFail = async (req, res) => {
     res.send(`Hatali istek`).status(400)
 }
-const updateProductFail = async (req, res) => {
+const updateCategoryFail = async (req, res) => {
     res.send(`Hatali istek, lutfen id giriniz`).status(400)
 }
 
 module.exports = {
     findAll,
     findById,
-    createProduct,
-    createProductFail,
-    deleteProduct,
-    deleteProductFail,
-    updateProduct,
-    updateProductFail,
+    createCategory,
+    createCategoryFail,
+    deleteCategory,
+    deleteCategoryFail,
+    updateCategory,
+    updateCategoryFail,
 }

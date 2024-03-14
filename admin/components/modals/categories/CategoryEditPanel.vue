@@ -41,20 +41,16 @@ const editCtg = async () => {
   if (fileInput) {
     const formData = new FormData();
     formData.append('categoryImage', fileInput);
-    await fetch(categoryStore.ctgImgFetchUrl, {
+    await fetch('http://localhost:3000/public/images', {
       method: 'POST',
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
-        categoryStore.requestCtgBody.name = categoryStore.editPanelCtg.name;
-        categoryStore.requestCtgBody.img = data.filename;
-        categoryStore.updateCategory();
         categoryStore.editPanelCtg.img = data.filename;
+        categoryStore.updateCategory();
       });
   } else {
-    categoryStore.requestCtgBody.name = categoryStore.editPanelCtg.name;
-    categoryStore.requestCtgBody.img = categoryStore.editPanelCtg.img;
     await categoryStore.updateCategory();
   }
 };

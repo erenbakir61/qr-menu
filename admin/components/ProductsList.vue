@@ -5,7 +5,7 @@ const productStore = useProductStore();
 
 <template>
   <ul class="products-list px-4">
-    <li v-for="prd in productStore.filteredProducts" class="products-item">
+    <li v-for="prd in productStore.filteredProducts" class="products-item" v-bind:key="prd._id">
       <p>
         {{ prd.name }}<span>{{ prd.price + ' ₺' }}</span>
       </p>

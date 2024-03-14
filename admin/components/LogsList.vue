@@ -7,7 +7,7 @@
         <th>Info</th>
         <th>Date</th>
       </tr>
-      <tr v-for="log in logStore.logs" class="log-item">
+      <tr v-for="log in logStore.logs" class="log-item" v-bind:key="log._id">
         <td>{{ log.user }}</td>
         <td v-bind:class="log.method" class="log-method">
           {{ log.method }}

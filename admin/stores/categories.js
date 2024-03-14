@@ -47,10 +47,14 @@ export const useCategoryStore = defineStore('categoryStore', {
       await fetch(this.ctgFetchUrl + this.editPanelCtg._id, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(this.requestCtgBody),
+        body: JSON.stringify(this.editPanelCtg),
       })
         .then((response) => response.json())
-        .then((this.categoryEditPanelIsOpen = false));
+        .then(() => {
+          const indexElement = this.categories.findIndex((i) => i._id === this.editPanelCtg._id);
+          this.categories[indexElement] = this.editPanelCtg;
+          this.categoryEditPanelIsOpen = false;
+        });
     },
     async deleteCategory(category) {
       await fetch(this.ctgFetchUrl + this.editPanelCtg._id, {

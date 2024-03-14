@@ -1,5 +1,5 @@
 <template>
-  <div v-for="category in categoryStore.categories" class="card-wrapper">
+  <div v-for="category in categoryStore.categories" class="card-wrapper" v-bind:key="category._id">
     <div class="card">
       <div class="card_image">
         <img
