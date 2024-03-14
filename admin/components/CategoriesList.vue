@@ -23,6 +23,5 @@
 
 <script setup>
 import { useCategoryStore } from '~/stores/categories';
-
 const categoryStore = useCategoryStore();
 </script>

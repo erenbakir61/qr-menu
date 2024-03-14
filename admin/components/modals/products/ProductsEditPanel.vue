@@ -43,7 +43,7 @@
           <button v-on:click="productStore.deletePrd(productStore.editPanelPrd)">
             <img src="@/assets/img/trash.svg" alt="Delete Category" />Delete
           </button>
-          <button v-on:click="editProduct(productStore.editPanelPrd)">
+          <button v-on:click="productStore.editProduct(productStore.editPanelPrd)">
             <img src="@/assets/img/check.svg" alt="Accept Category" />Accept
           </button>
         </div>
@@ -56,25 +56,6 @@
 import { useProductStore } from '~/stores/products';
 
 const productStore = useProductStore();
-
-const editProduct = async (product) => {
-  await fetch(productStore.prdFetchUrl + product._id, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(product),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.status === 'success') {
-        const productIndex = productStore.filteredProducts.findIndex((prd) => prd._id === product._id);
-        productStore.filteredProducts[productIndex] = product;
-        productStore.productEditPanelOpener(product);
-      } else {
-        productStore.productModalError = true;
-        productStore.productModalErrorMessage = data.message;
-      }
-    });
-};
 </script>
 
 <style>

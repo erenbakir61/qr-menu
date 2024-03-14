@@ -1,22 +1,6 @@
 <script setup>
-import { useLogStore } from '~/stores/logs';
 import { useProductStore } from '~/stores/products';
-import { onBeforeMount } from 'vue';
-
-const logStore = useLogStore();
 const productStore = useProductStore();
-
-onBeforeMount(async () => {
-  await fetch(productStore.prdFetchUrl)
-    .then((response) => response.json())
-    .then((json) => {
-      productStore.products = json.message;
-      productStore.filteredProducts = json.message;
-    });
-  await fetch(productStore.ctgFetchUrl)
-    .then((response) => response.json())
-    .then((json) => (productStore.categories = json.message))
-});
 </script>
 
 <template>
@@ -41,6 +25,11 @@ onBeforeMount(async () => {
 .products-body .products-item {
   position: relative;
   padding: 0.4rem 1rem;
+  border-radius: 10px;
+}
+
+.products-item p {
+  margin: 0.25rem 0;
 }
 
 .products-body .products-item:nth-child(odd) {

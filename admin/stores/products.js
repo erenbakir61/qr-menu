@@ -63,17 +63,23 @@ export const useProductStore = defineStore('productsStore', {
           }
         });
     },
-    async updatePrd(product) {
-      if (product.price >= 0 && product.price <= 999) {
-        await fetch(this.prdFetchUrl + product._id, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.editPanelPrd),
-        })
-          .then((response) => response.json())
-          .then((this.productEditPanelError = false))
-          .then((this.productEditPanelIsOpen = false));
-      } else this.productEditPanelError = true;
+    async editProduct(product) {
+      await fetch(this.prdFetchUrl + product._id, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(product),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 'success') {
+            const productIndex = this.filteredProducts.findIndex((prd) => prd._id === product._id);
+            this.filteredProducts[productIndex] = product;
+            this.productEditPanelOpener(product);
+          } else {
+            this.productModalError = true;
+            this.productModalErrorMessage = data.message;
+          }
+        });
     },
   },
 });

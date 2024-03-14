@@ -9,7 +9,7 @@
               <div class="login_panel-username">
                 <label for="panelUsername">Username</label>
                 <div>
-                  <img class="input_img" src="@/assets/img/user.svg" />
+                  <img alt="user" class="input_img" src="@/assets/img/user.svg" />
                   <input type="text" id="panelUsername" />
                 </div>
               </div>

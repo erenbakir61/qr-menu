@@ -1,11 +1,9 @@
 <script setup>
-import { useMenuStore } from '~/stores/menu';
 import { onBeforeMount, ref } from 'vue';
 import { useProductStore } from '~/stores/products';
 import ProductsEditPanel from '~/components/modals/products/ProductsEditPanel.vue';
 import ProductCreatePanel from '~/components/modals/products/ProductCreatePanel.vue';
 
-const menuStore = useMenuStore();
 const productStore = useProductStore();
 const currentCtg = ref('All');
 
@@ -103,6 +101,7 @@ onBeforeMount(async () => {
 }
 
 .products-header h4 {
+  font-size: 1.3rem;
   display: inline-block;
 }
 
