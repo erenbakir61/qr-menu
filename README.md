@@ -29,3 +29,10 @@ A simple Full Stack QR-Menu Project.
 
  - ``cd client``
  - ``npm run dev``
+
+
+
+ ## Features To Be Added
+
+ - Login panel will be added
+ - Member management panel will be added
