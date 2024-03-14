@@ -35,4 +35,4 @@ A simple Full Stack QR-Menu Project.
  ## Features To Be Added
 
  - Login panel will be added
- - Member management panel will be added
+ - Member management system will be added
