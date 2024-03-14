@@ -1,5 +1,6 @@
 # QR-Menu
-
+A simple Full Stack QR-Menu Project.
+ 
  
  # API Installation
  - ``cd api``
