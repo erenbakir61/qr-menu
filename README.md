@@ -1,6 +1,5 @@
 # QR-Menu
 
- # API
  
  # API Installation
  - ``cd api``
