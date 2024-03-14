@@ -9,7 +9,9 @@
 >
 >> #### API Features
 >> GET/POST/PATCH/DELETE - Products
+>> 
 >> GET/POST/PATCH/DELETE - Categories
+>> 
 >> Create Log Information For Every Requests.
 
 > #### Admin Panel
